@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useData } from "../context/DataContext";
 
 const questions = [
   {
@@ -86,6 +87,7 @@ const questions = [
 
 function BaselinePage() {
   const navigate = useNavigate();
+  const { saveBaseline } = useData();
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState({});
@@ -126,20 +128,9 @@ function BaselinePage() {
   };
 
   const completeBaseline = () => {
-    /*
-      Save baseline completion so the application knows
-      that the user has completed onboarding.
-    */
-    localStorage.setItem("baselineCompleted", "true");
-    localStorage.setItem(
-      "baselineAnswers",
-      JSON.stringify(answers)
-    );
-
-    /*
-      Go directly to the dashboard after completing
-      the baseline assessment.
-    */
+    if (typeof saveBaseline === "function") {
+      saveBaseline(answers);
+    }
     navigate("/dashboard", { replace: true });
   };
 

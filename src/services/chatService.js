@@ -1,12 +1,13 @@
 /**
  * Chat Service
  * Communicates with the backend server endpoint POST /api/chat.
- * All Gemini interactions and API keys stay on the backend server.
+ * Passes conversation history, message, emotional signals, and current wellbeing context.
  */
 
 export async function sendChatMessage({
   message,
   history = [],
+  context = null,
   sentiment = null,
   emotions = null
 }) {
@@ -18,6 +19,7 @@ export async function sendChatMessage({
     body: JSON.stringify({
       message,
       history,
+      context,
       sentiment,
       emotions
     })

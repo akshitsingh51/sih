@@ -56,12 +56,18 @@ If the user indicates immediate danger or intent to harm themselves or someone e
 
 /**
  * POST /api/chat
- * Body: { message: string, history: Array<{ role: 'user'|'assistant', content: string }>, sentiment?: object, emotions?: object }
- * Returns: { reply: string }
+ * Body: {
+ *   message: string,
+ *   history: Array<{ role: 'user'|'assistant', content: string }>,
+ *   context?: { latestMood?: string|number, latestStress?: string|number, dominantEmotion?: string, recentNote?: string, distressLevel?: string },
+ *   sentiment?: object,
+ *   emotions?: object
+ * }
+ * Returns: { reply: string, model: string }
  */
 app.post('/api/chat', async (req, res) => {
   try {
-    const { message, history = [], sentiment = null, emotions = null } = req.body;
+    const { message, history = [], context = null, sentiment = null, emotions = null } = req.body;
 
     if (!message || typeof message !== 'string' || !message.trim()) {
       return res.status(400).json({ error: 'Message is required.' });
@@ -91,15 +97,23 @@ app.post('/api/chat', async (req, res) => {
       }
     }
 
-    // Build user message with optional emotional signal context
+    // Build user message with optional emotional & check-in context
     let userPromptText = message.trim();
-    if (sentiment || emotions) {
-      const contextSignals = [];
-      if (sentiment?.label) contextSignals.push(`Detected sentiment: ${sentiment.label}`);
-      if (emotions?.dominantEmotion) contextSignals.push(`Dominant emotion: ${emotions.dominantEmotion}`);
-      if (contextSignals.length > 0) {
-        userPromptText = `${userPromptText}\n\n[Context: ${contextSignals.join(', ')}]`;
-      }
+    const contextSignals = [];
+
+    if (context) {
+      if (context.latestMood) contextSignals.push(`Recent mood rating: ${context.latestMood}`);
+      if (context.latestStress) contextSignals.push(`Recent stress rating: ${context.latestStress}`);
+      if (context.dominantEmotion) contextSignals.push(`Primary emotion: ${context.dominantEmotion}`);
+      if (context.recentNote) contextSignals.push(`Recent check-in thought: "${context.recentNote}"`);
+      if (context.distressLevel && context.distressLevel !== 'LOW') contextSignals.push(`Distress level: ${context.distressLevel}`);
+    }
+
+    if (sentiment?.label) contextSignals.push(`Current message sentiment: ${sentiment.label}`);
+    if (emotions?.dominantEmotion) contextSignals.push(`Current message emotion: ${emotions.dominantEmotion}`);
+
+    if (contextSignals.length > 0) {
+      userPromptText = `${userPromptText}\n\n[User Wellbeing Context: ${contextSignals.join(', ')}]`;
     }
 
     contents.push({

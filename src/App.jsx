@@ -43,12 +43,15 @@ function App() {
 
             {/* Daily Check-In */}
             <Route path="/check-in" element={<CheckInPage />} />
+            <Route path="/checkin" element={<Navigate to="/check-in" replace />} />
 
             {/* Chat */}
             <Route path="/chat" element={<ChatPage />} />
 
             {/* Trends */}
             <Route path="/trends" element={<TrendsPage />} />
+            <Route path="/history" element={<Navigate to="/trends" replace />} />
+            <Route path="/insights" element={<Navigate to="/trends" replace />} />
 
             {/* Help & Emergency Support */}
             <Route path="/help" element={<HelpPage />} />

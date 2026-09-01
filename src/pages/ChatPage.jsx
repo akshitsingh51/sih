@@ -15,11 +15,11 @@ const crisisKeywords = [
   'hurt myself', 'hang myself', 'take my life', 'cut myself'
 ];
 
-const QUICK_PROMPTS = [
-  "I'm feeling overwhelmed and stressed today.",
-  "Can you guide me through a calming breathing exercise?",
-  "I'm having trouble sleeping because of racing thoughts.",
-  "I feel like I have too much work and don't know where to start."
+const STARTER_PROMPTS = [
+  "Help me understand how I'm feeling today.",
+  "I'm feeling stressed and overwhelmed.",
+  "Give me a 3-minute calming breathing exercise.",
+  "Help me reflect on what went well today."
 ];
 
 function ChatPage() {
@@ -39,7 +39,7 @@ function ChatPage() {
   const [analysisResult, setAnalysisResult] = useState(null);
 
   const messagesEndRef = useRef(null);
-  const { addCheckIn } = useData();
+  const { addChatInsight, getSummaryStats } = useData();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -98,6 +98,15 @@ function ChatPage() {
       timestamp: new Date().toISOString()
     });
 
+    // Record conversational insight into central DataContext
+    if (addChatInsight) {
+      addChatInsight({
+        sentiment,
+        emotions,
+        text: messageContent
+      });
+    }
+
     try {
       // 4. Build conversation history for memory
       const conversationHistory = messages.map(msg => ({
@@ -105,15 +114,26 @@ function ChatPage() {
         content: msg.content || msg.text || ''
       }));
 
-      // 5. Send message to backend and await Gemini response
+      // 5. Retrieve current wellbeing context from central state
+      const summary = getSummaryStats ? getSummaryStats() : null;
+      const context = summary ? {
+        latestMood: summary.mood ? `${summary.mood}/5` : null,
+        latestStress: summary.anxiety ? `${summary.anxiety}/10` : null,
+        dominantEmotion: summary.dominantEmotion,
+        recentNote: summary.recentNote,
+        distressLevel: summary.riskLevel
+      } : null;
+
+      // 6. Send message to backend and await Gemini response
       const data = await sendChatMessage({
         message: messageContent,
         history: conversationHistory,
+        context,
         sentiment,
         emotions
       });
 
-      // 6. Display Gemini's actual response
+      // 7. Display Gemini's actual response
       const assistantMessage = {
         id: Date.now() + 1,
         role: 'assistant',
@@ -125,22 +145,14 @@ function ChatPage() {
 
       setMessages(prev => [...prev, assistantMessage]);
 
-      // 7. Save check-in into context
-      addCheckIn({
-        type: 'chat',
-        text: messageContent,
-        sentiment,
-        emotions
-      });
-
     } catch (err) {
       console.error('Chat request failed:', err);
       const errorMessage = {
         id: Date.now() + 1,
         role: 'assistant',
         type: 'bot',
-        content: "Sorry, I'm having trouble connecting right now. Please try again.",
-        text: "Sorry, I'm having trouble connecting right now. Please try again.",
+        content: "Sorry, I'm having trouble connecting right now. Please try again in a moment.",
+        text: "Sorry, I'm having trouble connecting right now. Please try again in a moment.",
         timestamp: new Date().toISOString()
       };
       setMessages(prev => [...prev, errorMessage]);
@@ -156,133 +168,160 @@ function ChatPage() {
     }
   };
 
+  const hasOnlyGreeting = messages.length === 1 && messages[0].role === 'assistant';
+
   return (
     <div className="chat-page">
       <Header />
       <CrisisPanel visible={showCrisis} onClose={() => setShowCrisis(false)} />
 
-      <main className="chat-main-wrapper">
-        {/* Main Chat Container */}
-        <section className="chat-container">
+      <main className="chat-layout-wrapper">
+        {/* Main Conversation Card */}
+        <section className="chat-main-card">
           {/* Header Bar */}
-          <div className="chat-header-bar">
-            <div className="chat-title-group">
-              <div className="chat-avatar-badge">🌿</div>
+          <div className="chat-card-header">
+            <div className="chat-header-identity">
+              <div className="chat-ai-icon">✦</div>
               <div>
-                <h2>Supportive AI Companion</h2>
-                <p>Empathetic, confidential listening & coping guidance</p>
+                <h2>Your Wellbeing Assistant</h2>
+                <p>A private, judgment-free space to reflect and unwind</p>
               </div>
+            </div>
+            <div className="chat-presence-badge">
+              <span className="presence-dot" />
+              <span>Active</span>
             </div>
           </div>
 
-          {/* Quick topic suggestion chips */}
-          <div className="chat-quick-prompts">
-            {QUICK_PROMPTS.map((prompt, idx) => (
-              <button
-                key={idx}
-                className="quick-chip"
-                onClick={() => handleSend(prompt)}
-                disabled={isAnalyzing}
-              >
-                {prompt}
-              </button>
-            ))}
-          </div>
-
-          {/* Messages Thread */}
-          <div className="messages-container">
-            {messages.map((message) => (
-              <div key={message.id} className={`message-row ${message.type || (message.role === 'user' ? 'user' : 'bot')}`}>
-                <div className="msg-avatar">
-                  {(message.type === 'bot' || message.role === 'assistant') ? '🌿' : '👤'}
-                </div>
-                <div>
-                  <div className="msg-bubble">
-                    {message.content || message.text}
-                  </div>
-                  <div className="msg-meta">
-                    <span>{new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
-                  </div>
+          {/* Messages Feed */}
+          <div className="chat-feed-container">
+            {hasOnlyGreeting && (
+              /* Beautiful Welcoming Empty State with Starters */
+              <div className="chat-welcome-state">
+                <div className="welcome-symbol">🌿</div>
+                <h3>A space to talk & reflect</h3>
+                <p>
+                  Share what's on your mind. You can ask for a calming exercise,
+                  talk through stressful feelings, or reflect on your day.
+                </p>
+                <div className="starter-prompts-grid">
+                  {STARTER_PROMPTS.map((prompt, idx) => (
+                    <button
+                      key={idx}
+                      className="starter-prompt-pill"
+                      onClick={() => handleSend(prompt)}
+                      disabled={isAnalyzing}
+                    >
+                      <span>✦</span> {prompt}
+                    </button>
+                  ))}
                 </div>
               </div>
-            ))}
+            )}
+
+            {messages.map((message) => {
+              const isUser = message.type === 'user' || message.role === 'user';
+              return (
+                <div key={message.id} className={`chat-message-row ${isUser ? 'user-row' : 'ai-row'}`}>
+                  <div className="msg-avatar-icon">
+                    {isUser ? '👤' : '✦'}
+                  </div>
+                  <div className="msg-body-wrapper">
+                    <div className="msg-bubble-card">
+                      {message.content || message.text}
+                    </div>
+                    <span className="msg-timestamp">
+                      {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
 
             {isAnalyzing && (
-              <div className="message-row bot">
-                <div className="msg-avatar">🌿</div>
-                <div className="msg-bubble">
-                  <div className="typing-indicator">
-                    <span></span><span></span><span></span>
+              <div className="chat-message-row ai-row">
+                <div className="msg-avatar-icon">✦</div>
+                <div className="msg-body-wrapper">
+                  <div className="msg-bubble-card typing-bubble">
+                    <div className="typing-dots">
+                      <span /><span /><span />
+                    </div>
                   </div>
                 </div>
               </div>
             )}
+
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input Area */}
-          <div className="chat-input-wrapper">
-            <div className="chat-input-row">
+          {/* Input Bar */}
+          <div className="chat-input-bar">
+            <div className="chat-input-box">
               <textarea
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyPress}
-                placeholder="Share how you're feeling, or ask for a calming exercise..."
-                rows={2}
+                placeholder="Write something... (Press Enter to send, Shift+Enter for new line)"
+                rows={1}
                 disabled={isAnalyzing}
               />
               <button
                 onClick={() => handleSend()}
-                className="chat-send-btn"
+                className="chat-submit-btn"
                 disabled={isAnalyzing || !input.trim()}
+                title="Send message"
+                aria-label="Send message"
               >
-                <span>Send</span>
                 <span>➤</span>
               </button>
             </div>
-            <p className="chat-disclaimer-note">
-              This AI companion provides emotional support and stress management, not clinical therapy or medical diagnosis.
+            <p className="chat-safety-disclaimer">
+              This AI provides supportive conversation and stress relief, not clinical therapy or medical diagnosis.
             </p>
           </div>
         </section>
 
-        {/* Sidebar with Real-Time Emotion Insights & Emergency Helplines */}
-        <aside className="chat-sidebar-wrapper">
-          <div className="sidebar-card">
-            <h3>📊 Live Emotional Signals</h3>
+        {/* Sidebar for Real-Time Emotional Signals & Emergency Help */}
+        <aside className="chat-side-panel">
+          <div className="wellness-card">
+            <div className="wellness-card-header">
+              <h3>📊 Emotional Signals</h3>
+            </div>
             {analysisResult ? (
-              <div className="insight-metric-list">
-                <div className="insight-metric-item">
-                  <span className="insight-label">Sentiment</span>
-                  <span className={`insight-value sentiment-badge-${(analysisResult.sentiment?.label || 'neutral').toLowerCase()}`}>
+              <div className="emotion-signal-list">
+                <div className="signal-item">
+                  <span className="signal-label">Sentiment</span>
+                  <span className={`signal-tag tag-${(analysisResult.sentiment?.label || 'neutral').toLowerCase()}`}>
                     {analysisResult.sentiment?.label || 'Neutral'}
                   </span>
                 </div>
-                <div className="insight-metric-item">
-                  <span className="insight-label">Primary Emotion</span>
-                  <span className="insight-value">
-                    {analysisResult.emotions?.dominantEmotion ? analysisResult.emotions.dominantEmotion.toUpperCase() : 'Calm / Neutral'}
+                <div className="signal-item">
+                  <span className="signal-label">Dominant Tone</span>
+                  <span className="signal-value">
+                    {analysisResult.emotions?.dominantEmotion ? analysisResult.emotions.dominantEmotion.toUpperCase() : 'Calm / Balanced'}
                   </span>
                 </div>
               </div>
             ) : (
-              <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
-                Send a message to see real-time emotional signal tracking.
+              <p className="empty-signals-text">
+                Your conversational emotional signals will appear here as you chat.
               </p>
             )}
           </div>
 
-          <div className="sidebar-card">
-            <h3>🚨 24/7 Immediate Help</h3>
-            <div className="helpline-quick-list">
+          <div className="wellness-card support-card-subtle">
+            <div className="wellness-card-header">
+              <h3>🤍 24/7 Human Helplines</h3>
+            </div>
+            <div className="helpline-compact-list">
               {helplines.slice(0, 3).map((h) => (
                 <a
                   key={h.id}
                   href={`tel:${h.tollFree || h.number}`}
-                  className="helpline-chip"
+                  className="helpline-compact-chip"
                 >
-                  <span>{h.name}</span>
-                  <span>📞 {h.tollFree || h.number}</span>
+                  <span className="helpline-chip-name">{h.name}</span>
+                  <span className="helpline-chip-num">📞 {h.tollFree || h.number}</span>
                 </a>
               ))}
             </div>

@@ -1,74 +1,78 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 /**
- * ExplainableAI Component
- * Shows why the system generated a particular score
+ * ExplainableAI Component — Warm Sage Theme
  */
 function ExplainableAI({ distressData }) {
+  const [expanded, setExpanded] = useState(false);
+
   if (!distressData) return null;
 
   const { score, riskLevel, factors, explanation } = distressData;
 
   return (
-    <div className="explainable-ai-card">
-      <h3 className="explainable-title">
-        Why did the system generate this score?
-      </h3>
-      
-      <div className="explainable-score">
-        <span className="score-number">{score}</span>
-        <span className="score-label">/100</span>
-        <span className={`risk-level-badge risk-${riskLevel.toLowerCase()}`}>
-          {riskLevel}
-        </span>
-      </div>
-
-      <div className="explainable-explanation">
-        <p>{explanation}</p>
-      </div>
-
-      <div className="factors-list">
-        <h4>Contributing Factors</h4>
-        {factors && factors.map((factor, index) => (
-          <div key={index} className="factor-item">
-            <div className="factor-header">
-              <span className="factor-name">{factor.name}</span>
-              <span className="factor-weight">Weight: {factor.weight}</span>
-            </div>
-            <div className="factor-bar-container">
-              <div 
-                className="factor-bar" 
-                style={{ width: `${Math.min(100, factor.contribution)}%` }}
-              />
-            </div>
-            <div className="factor-contribution">
-              Contributes {Math.round(factor.contribution)} points
-            </div>
-            {factor.details && (
-              <div className="factor-details">{factor.details}</div>
-            )}
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '12px 16px', background: 'var(--surface-subtle)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
+        <div>
+          <span style={{ fontSize: '0.74rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+            Current State
+          </span>
+          <div style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-main)', marginTop: '2px' }}>
+            {riskLevel === 'LOW' ? 'Steady & Manageable' : riskLevel === 'MODERATE' ? 'Mild Stress Present' : 'Support Recommended'}
           </div>
-        ))}
+        </div>
+        <div style={{ marginLeft: 'auto', textAlign: 'right' }}>
+          <span style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--deep-sage)' }}>{score}</span>
+          <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>/100</span>
+        </div>
       </div>
 
-      <div className="psychological-basis">
-        <h4>Psychological Basis</h4>
-        <p>
-          These variables are commonly studied as indicators associated with 
-          psychological distress. However, they do not independently establish 
-          a clinical diagnosis. The system uses these factors to estimate 
-          relative risk levels for monitoring purposes.
-        </p>
-      </div>
+      <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
+        {explanation}
+      </p>
 
-      <div className="limitations-note">
-        <h4>Important Limitations</h4>
-        <ul>
-          <li>This is a prototype estimate, not a clinical assessment</li>
-          <li>Self-reported data may not capture the full picture</li>
-          <li>Cultural factors can influence responses</li>
-          <li>Professional review is recommended for high-risk cases</li>
-        </ul>
+      {/* Contributing Factors */}
+      {factors && factors.length > 0 && (
+        <div>
+          <h4 style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '10px' }}>
+            Key Factors Analyzed
+          </h4>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            {factors.slice(0, 3).map((factor, index) => (
+              <div key={index} style={{ padding: '10px 14px', background: 'var(--surface-subtle)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.82rem', marginBottom: '4px' }}>
+                  <span style={{ fontWeight: 600, color: 'var(--text-main)' }}>{factor.name}</span>
+                  <span style={{ color: 'var(--text-muted)' }}>{factor.weight} weight</span>
+                </div>
+                <div style={{ width: '100%', height: '5px', background: 'rgba(113, 133, 107, 0.15)', borderRadius: '3px', overflow: 'hidden' }}>
+                  <div style={{ width: `${Math.min(100, factor.contribution)}%`, height: '100%', background: 'var(--primary-sage)', borderRadius: '3px' }} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Expandable Disclaimer */}
+      <div>
+        <button
+          type="button"
+          onClick={() => setExpanded(prev => !prev)}
+          style={{ fontSize: '0.78rem', color: 'var(--deep-sage)', fontWeight: 600, background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+        >
+          {expanded ? 'Hide clinical note ▴' : 'View clinical note & limitations ▾'}
+        </button>
+
+        {expanded && (
+          <div style={{ marginTop: '10px', padding: '12px 14px', background: 'var(--surface-subtle)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.45 }}>
+            <p style={{ marginBottom: '4px' }}>
+              <strong>Notice:</strong> This score is a dynamic estimate based on your self-reported check-in responses and is intended for personal wellbeing monitoring, not a formal psychiatric diagnosis.
+            </p>
+            <p>
+              If you are experiencing severe distress or thoughts of harm, please connect with 24/7 crisis resources or a healthcare professional.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

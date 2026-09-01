@@ -6,6 +6,7 @@ import {
   PointElement,
   LineElement,
   BarElement,
+  RadialLinearScale,
   Title,
   Tooltip,
   Legend,
@@ -20,6 +21,7 @@ ChartJS.register(
   PointElement,
   LineElement,
   BarElement,
+  RadialLinearScale,
   Title,
   Tooltip,
   Legend,
@@ -27,11 +29,15 @@ ChartJS.register(
 );
 
 /**
- * DistressTrendChart - Shows distress score over time
+ * DistressTrendChart - Warm Sage minimalist trend line
  */
 export function DistressTrendChart({ data }) {
   if (!data || data.length === 0) {
-    return <div className="chart-placeholder">No trend data available yet</div>;
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#77766F', fontSize: '0.88rem' }}>
+        No check-in trend data recorded yet
+      </div>
+    );
   }
 
   const chartData = {
@@ -39,11 +45,14 @@ export function DistressTrendChart({ data }) {
     datasets: [
       {
         label: 'Distress Score',
-        data: data.map(d => d.distressScore || 50),
-        borderColor: '#6366f1',
-        backgroundColor: 'rgba(99, 102, 241, 0.1)',
+        data: data.map(d => d.distressScore ?? 50),
+        borderColor: '#53654F',
+        backgroundColor: 'rgba(113, 133, 107, 0.12)',
         fill: true,
-        tension: 0.4,
+        tension: 0.35,
+        pointBackgroundColor: '#53654F',
+        pointBorderColor: '#FFFDFC',
+        pointBorderWidth: 2,
         pointRadius: 4,
         pointHoverRadius: 6
       }
@@ -56,29 +65,48 @@ export function DistressTrendChart({ data }) {
     plugins: {
       legend: { display: false },
       tooltip: {
+        backgroundColor: '#2F302C',
+        titleFont: { family: 'Manrope', size: 12 },
+        bodyFont: { family: 'Manrope', size: 13, weight: '600' },
+        padding: 10,
+        cornerRadius: 8,
+        displayColors: false,
         callbacks: {
-          label: (context) => `Distress Score: ${context.parsed.y}`
+          label: (context) => `Distress: ${context.parsed.y}/100`
         }
       }
     },
     scales: {
+      x: {
+        grid: { display: false },
+        ticks: {
+          color: '#77766F',
+          font: { family: 'Manrope', size: 11 }
+        }
+      },
       y: {
         beginAtZero: true,
         max: 100,
-        title: { display: true, text: 'Distress Score' }
+        grid: { color: 'rgba(229, 222, 211, 0.7)' },
+        ticks: {
+          stepSize: 25,
+          color: '#77766F',
+          font: { family: 'Manrope', size: 11 },
+          callback: (value) => `${value}`
+        }
       }
     }
   };
 
   return (
-    <div className="chart-container">
+    <div style={{ width: '100%', height: '100%' }}>
       <Line data={chartData} options={options} />
     </div>
   );
 }
 
 /**
- * WellbeingRadarChart - Shows multiple wellbeing dimensions
+ * WellbeingRadarChart - Warm Sage & Terracotta multi-dimensional radar
  */
 export function WellbeingRadarChart({ data }) {
   if (!data) return null;
@@ -87,7 +115,7 @@ export function WellbeingRadarChart({ data }) {
     labels: ['Mood', 'Sleep', 'Safety', 'Support', 'Calm'],
     datasets: [
       {
-        label: 'Current',
+        label: 'Current Wellbeing',
         data: [
           data.mood || 3,
           data.sleep || 3,
@@ -95,12 +123,15 @@ export function WellbeingRadarChart({ data }) {
           data.support || 3,
           data.calm || 3
         ],
-        backgroundColor: 'rgba(99, 102, 241, 0.2)',
-        borderColor: '#6366f1',
-        pointBackgroundColor: '#6366f1'
+        backgroundColor: 'rgba(113, 133, 107, 0.2)',
+        borderColor: '#53654F',
+        pointBackgroundColor: '#53654F',
+        pointBorderColor: '#FFFDFC',
+        pointBorderWidth: 2,
+        pointRadius: 4
       },
       {
-        label: 'Baseline',
+        label: 'Baseline Profile',
         data: [
           data.baselineMood || 3,
           data.baselineSleep || 3,
@@ -108,9 +139,11 @@ export function WellbeingRadarChart({ data }) {
           data.baselineSupport || 3,
           data.baselineCalm || 3
         ],
-        backgroundColor: 'rgba(34, 197, 94, 0.1)',
-        borderColor: '#22c55e',
-        pointBackgroundColor: '#22c55e'
+        backgroundColor: 'rgba(197, 139, 104, 0.1)',
+        borderColor: '#C58B68',
+        borderDash: [4, 4],
+        pointBackgroundColor: '#C58B68',
+        pointRadius: 3
       }
     ]
   };
@@ -118,37 +151,58 @@ export function WellbeingRadarChart({ data }) {
   const options = {
     responsive: true,
     maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: true,
+        position: 'bottom',
+        labels: {
+          font: { family: 'Manrope', size: 11, weight: '600' },
+          color: '#2F302C',
+          boxWidth: 12
+        }
+      },
+      tooltip: {
+        backgroundColor: '#2F302C',
+        titleFont: { family: 'Manrope', size: 12 },
+        bodyFont: { family: 'Manrope', size: 12 },
+        padding: 8,
+        cornerRadius: 6
+      }
+    },
     scales: {
       r: {
         beginAtZero: true,
         max: 5,
-        ticks: { stepSize: 1 }
+        ticks: { stepSize: 1, display: false },
+        grid: { color: 'rgba(229, 222, 211, 0.8)' },
+        pointLabels: {
+          font: { family: 'Manrope', size: 12, weight: '600' },
+          color: '#2F302C'
+        }
       }
     }
   };
 
   return (
-    <div className="chart-container">
+    <div style={{ width: '100%', height: '100%' }}>
       <Line data={chartData} options={options} />
     </div>
   );
 }
 
 /**
- * RiskDistributionBar - Shows risk level distribution
+ * RiskDistributionBar - Warm Sage semantic distribution
  */
 export function RiskDistributionBar({ data }) {
   if (!data) return null;
 
-  const total = Object.values(data).reduce((a, b) => a + b, 0);
-
   const chartData = {
-    labels: ['Low', 'Moderate', 'High', 'Urgent'],
+    labels: ['Steady', 'Moderate', 'Elevated', 'Urgent'],
     datasets: [{
       label: 'Cases',
       data: [data.LOW || 0, data.MODERATE || 0, data.HIGH || 0, data.URGENT || 0],
-      backgroundColor: ['#22c55e', '#f59e0b', '#f97316', '#ef4444'],
-      borderRadius: 4
+      backgroundColor: ['#718A6A', '#C4935A', '#C58B68', '#B96A62'],
+      borderRadius: 6
     }]
   };
 
@@ -160,12 +214,20 @@ export function RiskDistributionBar({ data }) {
       legend: { display: false }
     },
     scales: {
-      x: { beginAtZero: true }
+      x: {
+        beginAtZero: true,
+        grid: { color: 'rgba(229, 222, 211, 0.7)' },
+        ticks: { color: '#77766F', font: { family: 'Manrope', size: 11 } }
+      },
+      y: {
+        grid: { display: false },
+        ticks: { color: '#2F302C', font: { family: 'Manrope', size: 12, weight: '600' } }
+      }
     }
   };
 
   return (
-    <div className="chart-container">
+    <div style={{ width: '100%', height: '100%' }}>
       <Bar data={chartData} options={options} />
     </div>
   );
