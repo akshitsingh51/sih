@@ -42,22 +42,33 @@ function HelpPage() {
     <div className="help-page" style={{ minHeight: '100vh', background: 'var(--bg-app)', display: 'flex', flexDirection: 'column' }}>
       <Header />
 
-      <main style={{ width: 'min(1140px, calc(100% - 32px))', margin: '32px auto 56px auto', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      <main className="page-container">
         {/* Header Hero */}
-        <div>
-          <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
-            Support & Crisis Directory
-          </h1>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', maxWidth: '720px', lineHeight: 1.5, marginTop: '2px' }}>
-            Free, confidential mental health resources and 24/7 helplines whenever you need assistance.
-          </p>
-        </div>
+        <section className="page-header">
+          <div className="page-header-text">
+            <span className="intro-eyebrow">Support & Crisis Resources</span>
+            <h1>24/7 Helplines & Care Directory</h1>
+            <p>
+              Free, confidential mental health resources and 24/7 professional helplines whenever you need assistance.
+            </p>
+          </div>
+        </section>
 
         {/* Emergency Alert Banner */}
-        <section style={{ background: 'var(--danger-bg)', border: '1px solid var(--danger-border)', borderRadius: 'var(--radius-sm)', padding: '18px 20px', display: 'flex', alignItems: 'center', gap: '14px' }}>
+        <section style={{
+          background: 'var(--danger-bg)',
+          border: '1px solid var(--danger-border)',
+          borderRadius: 'var(--radius-md)',
+          padding: '20px 22px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '16px'
+        }}>
           <div>
-            <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--danger)', marginBottom: '2px' }}>Immediate Safety First</h3>
-            <p style={{ fontSize: '0.86rem', color: '#6A3121', lineHeight: 1.45 }}>
+            <h3 style={{ fontSize: '0.98rem', fontWeight: 750, color: 'var(--danger)', marginBottom: '4px' }}>
+              Immediate Safety First
+            </h3>
+            <p style={{ fontSize: '0.88rem', color: '#6A3121', lineHeight: 1.5 }}>
               If you or someone around you is in immediate danger or experiencing severe thoughts of harm, please dial <strong>112</strong> or call the <strong>Tele-MANAS (14416)</strong> helpline immediately.
             </p>
           </div>
@@ -66,11 +77,14 @@ function HelpPage() {
         {/* Helplines Directory */}
         <section className="wellness-card">
           <div className="wellness-card-header">
-            <h3>Verified Support Helplines</h3>
+            <div>
+              <h3>Verified Support Helplines</h3>
+              <p className="card-description">Trained professionals and psychologists</p>
+            </div>
             <span className="card-subnote">Free & Confidential</span>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '14px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px' }}>
             {emergencyServices.map((service) => (
               <div
                 key={service.name}
@@ -78,29 +92,30 @@ function HelpPage() {
                   background: 'var(--surface-subtle)',
                   border: '1px solid var(--border)',
                   borderRadius: 'var(--radius-sm)',
-                  padding: '16px',
+                  padding: '18px 20px',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  gap: '12px'
+                  gap: '14px',
+                  transition: 'var(--transition-fast)'
                 }}
               >
                 <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-                    <h4 style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-primary)' }}>{service.name}</h4>
-                    <span style={{ fontSize: '0.72rem', fontWeight: 600, background: 'var(--primary-subtle)', color: 'var(--primary)', padding: '2px 6px', borderRadius: '4px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px', gap: '8px', flexWrap: 'wrap' }}>
+                    <h4 style={{ fontSize: '1rem', fontWeight: 750, color: 'var(--text-main)' }}>{service.name}</h4>
+                    <span className="tag tag-steady">
                       {service.availability}
                     </span>
                   </div>
-                  <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>{service.description}</p>
+                  <p style={{ fontSize: '0.84rem', color: 'var(--text-secondary)', lineHeight: 1.45 }}>{service.description}</p>
                 </div>
 
                 <a
                   href={`tel:${service.number.replace(/-/g, '')}`}
                   className="btn btn-primary"
-                  style={{ width: '100%', fontSize: '0.84rem', padding: '8px 12px' }}
+                  style={{ width: '100%', height: '40px', fontSize: '0.86rem' }}
                 >
-                  Call {service.number}
+                  📞 Call {service.number}
                 </a>
               </div>
             ))}
@@ -111,39 +126,42 @@ function HelpPage() {
         {recommendations && recommendations.categories && (
           <section className="wellness-card">
             <div className="wellness-card-header">
-              <h3>Personalized Wellbeing Guidance</h3>
-              <span className="card-subnote">Based on your recent state</span>
+              <div>
+                <h3>Personalized Wellbeing Guidance</h3>
+                <p className="card-description">Helpful suggestions tailored to your recent check-in patterns</p>
+              </div>
+              <span className="card-subnote">Gentle Advice</span>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '14px' }}>
-              {recommendations.categories.selfCare && (
-                <div style={{ background: 'var(--surface-subtle)', padding: '16px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
-                  <h4 style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--primary)', marginBottom: '8px' }}>Self-Care Strategies</h4>
-                  <ul style={{ listStyle: 'none', fontSize: '0.82rem', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px' }}>
+              {recommendations.categories.selfCare && recommendations.categories.selfCare.length > 0 && (
+                <div style={{ background: 'var(--surface-subtle)', padding: '18px 20px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
+                  <h4 style={{ fontSize: '0.92rem', fontWeight: 750, color: 'var(--deep-sage)', marginBottom: '10px' }}>Self-Care Strategies</h4>
+                  <ul style={{ listStyle: 'none', fontSize: '0.84rem', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     {recommendations.categories.selfCare.map((c, i) => (
-                      <li key={i}>• {c}</li>
+                      <li key={i} style={{ lineHeight: 1.45 }}>• {c}</li>
                     ))}
                   </ul>
                 </div>
               )}
 
-              {recommendations.categories.counseling && (
-                <div style={{ background: 'var(--surface-subtle)', padding: '16px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
-                  <h4 style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--primary)', marginBottom: '8px' }}>Support & Counseling</h4>
-                  <ul style={{ listStyle: 'none', fontSize: '0.82rem', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              {recommendations.categories.counseling && recommendations.categories.counseling.length > 0 && (
+                <div style={{ background: 'var(--surface-subtle)', padding: '18px 20px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
+                  <h4 style={{ fontSize: '0.92rem', fontWeight: 750, color: 'var(--terracotta)', marginBottom: '10px' }}>Support & Counseling</h4>
+                  <ul style={{ listStyle: 'none', fontSize: '0.84rem', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     {recommendations.categories.counseling.map((c, i) => (
-                      <li key={i}>• {c}</li>
+                      <li key={i} style={{ lineHeight: 1.45 }}>• {c}</li>
                     ))}
                   </ul>
                 </div>
               )}
 
               {recommendations.specificRecommendations && recommendations.specificRecommendations.length > 0 && (
-                <div style={{ background: 'var(--surface-subtle)', padding: '16px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
-                  <h4 style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--primary)', marginBottom: '8px' }}>Specific Interventions</h4>
-                  <ul style={{ listStyle: 'none', fontSize: '0.82rem', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                <div style={{ background: 'var(--surface-subtle)', padding: '18px 20px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
+                  <h4 style={{ fontSize: '0.92rem', fontWeight: 750, color: 'var(--deep-sage)', marginBottom: '10px' }}>Targeted Interventions</h4>
+                  <ul style={{ listStyle: 'none', fontSize: '0.84rem', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     {recommendations.specificRecommendations.map((c, i) => (
-                      <li key={i}>• {c}</li>
+                      <li key={i} style={{ lineHeight: 1.45 }}>• {c}</li>
                     ))}
                   </ul>
                 </div>

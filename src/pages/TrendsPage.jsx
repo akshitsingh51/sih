@@ -68,49 +68,52 @@ function TrendsPage() {
     <div className="trends-page" style={{ minHeight: '100vh', background: 'var(--bg-app)', display: 'flex', flexDirection: 'column' }}>
       <Header />
 
-      <main style={{ width: 'min(1140px, calc(100% - 32px))', margin: '32px auto 56px auto', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      <main className="page-container">
         {/* Page Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
-          <div>
-            <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
-              Wellbeing Trends & Analytics
-            </h1>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '2px' }}>
+        <section className="page-header">
+          <div className="page-header-text">
+            <span className="intro-eyebrow">History & Longitudinal Tracking</span>
+            <h1>Wellbeing Trends & Analytics</h1>
+            <p>
               Track patterns and understand how your mental wellness evolves over time.
             </p>
           </div>
 
-          <Link to="/check-in" className="btn btn-primary">
-            + New Check-in
-          </Link>
-        </div>
+          <div className="page-header-actions">
+            <Link to="/check-in" className="btn btn-primary">
+              <span className="btn-icon">+</span>
+              <span>New Check-in</span>
+            </Link>
+          </div>
+        </section>
 
         {checkIns.length === 0 ? (
-          <section className="wellness-card" style={{ padding: '48px 32px', textAlign: 'center' }}>
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px' }}>No trend data recorded yet</h2>
-            <p style={{ color: 'var(--text-secondary)', maxWidth: '460px', margin: '0 auto 18px auto', fontSize: '0.9rem', lineHeight: 1.5 }}>
-              Your trends and patterns will appear here automatically once you log daily check-ins.
+          <section className="wellness-card empty-dashboard-card">
+            <div className="empty-symbol">📈</div>
+            <h2>No trend data recorded yet</h2>
+            <p>
+              Your trends and patterns will appear here automatically once you start logging daily check-ins.
             </p>
-            <Link to="/check-in" className="btn btn-primary">
-              Start First Check-in
-            </Link>
+            <div className="empty-actions">
+              <Link to="/check-in" className="btn btn-primary">
+                + Start First Check-in
+              </Link>
+            </div>
           </section>
         ) : (
           <>
             {/* Trend Summary Box */}
-            <section className="wellness-card" style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
-              <div style={{ flex: 1 }}>
-                <span style={{ fontSize: '0.74rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                  Insight Observation
-                </span>
-                <p style={{ fontSize: '0.94rem', color: 'var(--text-primary)', fontWeight: 600, marginTop: '4px', lineHeight: 1.45 }}>
+            <section className="wellness-card" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', flexWrap: 'wrap' }}>
+              <div style={{ flex: 1, minWidth: '260px' }}>
+                <span className="section-eyebrow">Insight Observation</span>
+                <p style={{ fontSize: '0.95rem', color: 'var(--text-main)', fontWeight: 600, marginTop: '4px', lineHeight: 1.5 }}>
                   {trendAnalysis.summary}
                 </p>
               </div>
               {trendAnalysis.change !== 0 && (
-                <div style={{ background: 'var(--surface-subtle)', padding: '8px 14px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', fontSize: '0.82rem' }}>
+                <div style={{ background: 'var(--surface-subtle)', padding: '10px 16px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', fontSize: '0.84rem' }}>
                   <span style={{ color: 'var(--text-muted)' }}>Score Shift: </span>
-                  <strong style={{ color: trendAnalysis.change > 0 ? 'var(--danger)' : 'var(--primary)' }}>
+                  <strong style={{ color: trendAnalysis.change > 0 ? 'var(--danger)' : 'var(--success)' }}>
                     {trendAnalysis.change > 0 ? `+${trendAnalysis.change}` : trendAnalysis.change} pts
                   </strong>
                 </div>
@@ -122,13 +125,16 @@ function TrendsPage() {
               {/* Line Chart */}
               <section className="wellness-card">
                 <div className="wellness-card-header">
-                  <h3>Distress Score Timeline</h3>
+                  <div>
+                    <h3>Distress Score Timeline</h3>
+                    <p className="card-description">Daily scores over time</p>
+                  </div>
                   <span className="card-subnote">Daily History</span>
                 </div>
                 <div style={{ height: '260px' }}>
                   <DistressTrendChart data={checkIns} />
                 </div>
-                <p style={{ fontSize: '0.76rem', color: 'var(--text-muted)', marginTop: '10px', textAlign: 'center' }}>
+                <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '12px', textAlign: 'center' }}>
                   Lower scores reflect calmer, more manageable wellbeing.
                 </p>
               </section>
@@ -136,13 +142,16 @@ function TrendsPage() {
               {/* Radar Chart */}
               <section className="wellness-card">
                 <div className="wellness-card-header">
-                  <h3>Wellbeing Dimensions</h3>
+                  <div>
+                    <h3>Wellbeing Dimensions</h3>
+                    <p className="card-description">Comparing key indicators</p>
+                  </div>
                   <span className="card-subnote">Baseline vs Current</span>
                 </div>
                 <div style={{ height: '260px' }}>
                   <WellbeingRadarChart data={wellbeingData} />
                 </div>
-                <p style={{ fontSize: '0.76rem', color: 'var(--text-muted)', marginTop: '10px', textAlign: 'center' }}>
+                <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '12px', textAlign: 'center' }}>
                   Compares latest reflection against your onboarding baseline.
                 </p>
               </section>
@@ -151,32 +160,35 @@ function TrendsPage() {
             {/* Check-in History Table */}
             <section className="wellness-card">
               <div className="wellness-card-header">
-                <h3>Check-in History Log</h3>
+                <div>
+                  <h3>Check-in History Log</h3>
+                  <p className="card-description">Complete log of all your recorded reflections</p>
+                </div>
                 <span className="card-subnote">{checkIns.length} recorded</span>
               </div>
-              <div style={{ overflowX: 'auto' }}>
-                <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.86rem' }}>
+              <div className="table-responsive">
+                <table>
                   <thead>
-                    <tr style={{ borderBottom: '1px solid var(--border)', color: 'var(--text-muted)', fontSize: '0.76rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                      <th style={{ padding: '10px' }}>Date</th>
-                      <th style={{ padding: '10px' }}>Distress Score</th>
-                      <th style={{ padding: '10px' }}>Status</th>
-                      <th style={{ padding: '10px' }}>Notes</th>
+                    <tr>
+                      <th>Date</th>
+                      <th>Distress Score</th>
+                      <th>Status</th>
+                      <th>Notes & Reflections</th>
                     </tr>
                   </thead>
                   <tbody>
                     {checkIns.slice().reverse().map((entry, idx) => (
-                      <tr key={entry.id || idx} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
-                        <td style={{ padding: '10px', fontWeight: 600, color: 'var(--text-primary)' }}>
+                      <tr key={entry.id || idx}>
+                        <td style={{ fontWeight: 650, color: 'var(--text-main)' }}>
                           {new Date(entry.date).toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' })}
                         </td>
-                        <td style={{ padding: '10px', color: 'var(--primary)', fontWeight: 700 }}>
+                        <td style={{ color: 'var(--deep-sage)', fontWeight: 750 }}>
                           {entry.distressScore ?? '—'}/100
                         </td>
-                        <td style={{ padding: '10px' }}>
+                        <td>
                           <RiskBadge level={entry.riskLevel || 'LOW'} size="small" />
                         </td>
-                        <td style={{ padding: '10px', color: 'var(--text-secondary)', maxWidth: '300px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        <td style={{ color: 'var(--text-secondary)', maxWidth: '340px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                           {entry.additionalText || '—'}
                         </td>
                       </tr>

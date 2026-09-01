@@ -17,12 +17,10 @@ function LoginPage() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
-
     setError("");
   };
 
@@ -53,22 +51,12 @@ function LoginPage() {
       mobile: mobile.trim(),
     };
 
-    /*
-      Save the user's profile locally for this demonstration.
-      This does not send the information to an external server.
-    */
     localStorage.setItem("userProfile", JSON.stringify(profile));
 
-    /*
-      Use your existing authentication function if available.
-    */
     if (typeof login === "function") {
       login(profile);
     }
 
-    /*
-      Update profile if your AuthContext provides updateProfile.
-    */
     if (typeof updateProfile === "function") {
       updateProfile(profile);
     }
@@ -78,17 +66,10 @@ function LoginPage() {
 
   return (
     <div className="login-page">
-
-      {/* Decorative background elements */}
-      <div className="login-sun"></div>
-      <div className="login-horizon horizon-one"></div>
-      <div className="login-horizon horizon-two"></div>
-
       <main className="login-container">
 
         {/* Left / Introduction section */}
         <section className="login-intro">
-
           <div className="brand-mark">
             <span>🌿</span>
           </div>
@@ -96,57 +77,45 @@ function LoginPage() {
           <p className="eyebrow">MENTAL HEALTH MONITOR</p>
 
           <h1>
-            A space to
+            A safe space to
             <br />
             <span>check in with yourself.</span>
           </h1>
 
           <p className="intro-text">
-            Your well-being matters. Take a quiet moment to share a few
-            details so we can personalize your experience.
+            Your well-being comes first. Take a quiet moment to share a few details so we can personalize your monitoring companion.
           </p>
 
           <div className="support-note">
             <div className="support-icon">♡</div>
-
             <div>
-              <strong>You are in a safe space.</strong>
+              <strong>You are in a safe, confidential space.</strong>
               <p>
-                Your information is used only for this demonstration
-                and monitoring experience.
+                Your information is encrypted and stored locally in this private demonstration session.
               </p>
             </div>
           </div>
-
         </section>
 
         {/* Login card */}
         <section className="login-card">
-
           <div className="card-header">
-            <span className="step-label">GET STARTED</span>
-
+            <span className="step-label">STEP 01 OF 03</span>
             <h2>Welcome</h2>
-
             <p>
-              Tell us a little about yourself to begin your
-              mental well-being journey.
+              Enter your details to begin your personalized mental wellness journey.
             </p>
           </div>
 
           <form onSubmit={handleSubmit}>
-
             {/* Full Name */}
             <div className="form-group">
-              <label htmlFor="name">
-                Full name
-              </label>
-
+              <label htmlFor="name">Full Name</label>
               <input
                 id="name"
                 name="name"
                 type="text"
-                placeholder="Enter your full name"
+                placeholder="e.g. Akshit Singh"
                 value={formData.name}
                 onChange={handleChange}
                 autoComplete="name"
@@ -155,10 +124,7 @@ function LoginPage() {
 
             {/* Email */}
             <div className="form-group">
-              <label htmlFor="email">
-                Email address
-              </label>
-
+              <label htmlFor="email">Email Address</label>
               <input
                 id="email"
                 name="email"
@@ -172,15 +138,12 @@ function LoginPage() {
 
             {/* District */}
             <div className="form-group">
-              <label htmlFor="district">
-                District
-              </label>
-
+              <label htmlFor="district">District / City</label>
               <input
                 id="district"
                 name="district"
                 type="text"
-                placeholder="Enter your district"
+                placeholder="e.g. Mumbai, Delhi, Bengaluru"
                 value={formData.district}
                 onChange={handleChange}
               />
@@ -188,15 +151,12 @@ function LoginPage() {
 
             {/* Mobile */}
             <div className="form-group">
-              <label htmlFor="mobile">
-                Mobile number
-              </label>
-
+              <label htmlFor="mobile">10-Digit Mobile Number</label>
               <input
                 id="mobile"
                 name="mobile"
                 type="tel"
-                placeholder="10-digit mobile number"
+                placeholder="9876543210"
                 value={formData.mobile}
                 onChange={handleChange}
                 maxLength="10"
@@ -214,22 +174,19 @@ function LoginPage() {
 
             <button
               type="submit"
-              className="login-button"
+              className="btn btn-primary btn-large"
+              style={{ width: '100%', marginTop: '4px' }}
             >
-              Continue
-              <span>→</span>
+              Continue to Consent →
             </button>
-
           </form>
 
           <div className="privacy-note">
             <span>🔒</span>
             <p>
-              Your details remain within this demonstration
-              environment.
+              Private & locally encrypted session.
             </p>
           </div>
-
         </section>
 
       </main>
@@ -240,7 +197,6 @@ function LoginPage() {
         <span>•</span>
         <span>Your well-being comes first</span>
       </footer>
-
     </div>
   );
 }

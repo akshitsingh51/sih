@@ -44,21 +44,24 @@ function DashboardPage() {
       <main className="dashboard-main">
         {/* Top Greeting & Header Bar */}
         <section className="dashboard-intro">
-          <div>
+          <div className="intro-text-block">
+            <span className="intro-eyebrow">Personal Wellbeing Overview</span>
             <h1>
               {getTimeGreeting()}, {user?.name ? user.name.split(' ')[0] : 'there'}
             </h1>
             <p className="intro-subtext">
-              Here is a clear look at your mental wellbeing and suggested next steps.
+              Here is a gentle overview of how you've been doing and helpful next steps.
             </p>
           </div>
 
           <div className="dashboard-top-actions">
             <Link to="/check-in" className="btn btn-primary">
-              Log Today's Check-in
+              <span className="btn-icon">+</span>
+              <span>Start Daily Check-in</span>
             </Link>
             <Link to="/chat" className="btn btn-secondary">
-              Talk with AI Assistant
+              <span className="btn-icon">✦</span>
+              <span>Talk with AI</span>
             </Link>
           </div>
         </section>
@@ -66,6 +69,7 @@ function DashboardPage() {
         {!hasCheckIns ? (
           /* Clean Empty State */
           <section className="wellness-card empty-dashboard-card">
+            <div className="empty-symbol">🌿</div>
             <h2>Welcome to your wellbeing monitor</h2>
             <p>
               Take 1 minute to complete your first daily check-in. This establishes your daily baseline
@@ -73,10 +77,10 @@ function DashboardPage() {
             </p>
             <div className="empty-actions">
               <Link to="/check-in" className="btn btn-primary">
-                Complete First Check-in
+                + Complete First Check-in
               </Link>
               <Link to="/chat" className="btn btn-secondary">
-                Have a Quick Chat
+                ✦ Have a Quick Chat
               </Link>
             </div>
           </section>
@@ -88,8 +92,8 @@ function DashboardPage() {
               <div className="wellness-card status-overview-card">
                 <div className="card-top-row">
                   <span className="section-eyebrow">Current Wellbeing State</span>
-                  <span className={`status-tag status-${riskLevel.toLowerCase()}`}>
-                    {riskLevel === 'LOW' ? '● Steady' : riskLevel === 'MODERATE' ? '● Moderate' : '● Elevated'}
+                  <span className={`tag tag-${riskLevel.toLowerCase()}`}>
+                    ● {riskLevel === 'LOW' ? 'Steady' : riskLevel === 'MODERATE' ? 'Moderate' : 'Elevated'}
                   </span>
                 </div>
 
@@ -107,7 +111,7 @@ function DashboardPage() {
 
                 {latest && (
                   <div className="status-meta-row">
-                    <span>Last check-in:</span>
+                    <span>Last check-in</span>
                     <strong>
                       {new Date(latest.date).toLocaleDateString([], { month: 'short', day: 'numeric' })} at{' '}
                       {new Date(latest.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
@@ -120,7 +124,7 @@ function DashboardPage() {
               <div className="wellness-card metrics-card">
                 <div className="wellness-card-header">
                   <h3>Today's Key Signals</h3>
-                  <span className="card-subnote">Daily Check-in</span>
+                  <span className="card-subnote">From Latest Check-in</span>
                 </div>
 
                 <div className="metrics-grid">
@@ -147,7 +151,7 @@ function DashboardPage() {
                     <p className="card-description">Scores from your recent daily check-ins</p>
                   </div>
                   <Link to="/trends" className="btn-text">
-                    View full analytics →
+                    View analytics →
                   </Link>
                 </div>
 
@@ -159,8 +163,11 @@ function DashboardPage() {
               {/* Explainable AI Breakdown & Recommendations */}
               <div className="wellness-card">
                 <div className="wellness-card-header">
-                  <h3>Score Analysis & Guidance</h3>
-                  <span className="card-subnote">AI Assessment</span>
+                  <div>
+                    <h3>Score Analysis & Guidance</h3>
+                    <p className="card-description">Assessment breakdown & insights</p>
+                  </div>
+                  <span className="card-subnote">AI Insights</span>
                 </div>
 
                 <ExplainableAI distressData={currentDistress} />
@@ -170,7 +177,7 @@ function DashboardPage() {
                     <span className="rec-header-label">Suggested Next Step</span>
                     <p className="rec-text">{recommendations.categories.selfCare[0]}</p>
                     <Link to="/help" className="btn-text">
-                      View all support recommendations →
+                      View all support resources →
                     </Link>
                   </div>
                 )}
@@ -180,7 +187,8 @@ function DashboardPage() {
             {/* Quick Navigation Cards */}
             <section className="dashboard-actions-row">
               <Link to="/check-in" className="nav-shortcut-card">
-                <div>
+                <div className="shortcut-icon-circle">📝</div>
+                <div className="shortcut-text-block">
                   <h4>Daily Check-in</h4>
                   <p>Log today's 1-minute reflection</p>
                 </div>
@@ -188,15 +196,17 @@ function DashboardPage() {
               </Link>
 
               <Link to="/chat" className="nav-shortcut-card">
-                <div>
-                  <h4>AI Assistant Chat</h4>
-                  <p>Private, supportive conversation</p>
+                <div className="shortcut-icon-circle">✦</div>
+                <div className="shortcut-text-block">
+                  <h4>AI Wellbeing Chat</h4>
+                  <p>Private, supportive reflection</p>
                 </div>
                 <span className="arrow-icon">→</span>
               </Link>
 
               <Link to="/trends" className="nav-shortcut-card">
-                <div>
+                <div className="shortcut-icon-circle">📈</div>
+                <div className="shortcut-text-block">
                   <h4>Trends & Insights</h4>
                   <p>Review patterns and history</p>
                 </div>
@@ -204,9 +214,10 @@ function DashboardPage() {
               </Link>
 
               <Link to="/help" className="nav-shortcut-card support-shortcut">
-                <div>
-                  <h4>Helplines & Resources</h4>
-                  <p>24/7 free, confidential care</p>
+                <div className="shortcut-icon-circle">🤍</div>
+                <div className="shortcut-text-block">
+                  <h4>Helplines & Care</h4>
+                  <p>24/7 confidential support</p>
                 </div>
                 <span className="arrow-icon">→</span>
               </Link>

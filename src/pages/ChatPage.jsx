@@ -196,7 +196,7 @@ function ChatPage() {
           {/* Messages Feed */}
           <div className="chat-feed-container">
             {hasOnlyGreeting && (
-              /* Beautiful Welcoming Empty State with Starters */
+              /* Welcoming Empty State with Starters */
               <div className="chat-welcome-state">
                 <div className="welcome-symbol">🌿</div>
                 <h3>A space to talk & reflect</h3>
@@ -212,7 +212,7 @@ function ChatPage() {
                       onClick={() => handleSend(prompt)}
                       disabled={isAnalyzing}
                     >
-                      <span>✦</span> {prompt}
+                      <span className="pill-star">✦</span> {prompt}
                     </button>
                   ))}
                 </div>
@@ -261,7 +261,7 @@ function ChatPage() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyPress}
-                placeholder="Write something... (Press Enter to send, Shift+Enter for new line)"
+                placeholder="Write something to reflect... (Press Enter to send, Shift+Enter for new line)"
                 rows={1}
                 disabled={isAnalyzing}
               />
@@ -276,7 +276,7 @@ function ChatPage() {
               </button>
             </div>
             <p className="chat-safety-disclaimer">
-              This AI provides supportive conversation and stress relief, not clinical therapy or medical diagnosis.
+              This AI companion provides supportive conversation and stress relief, not clinical therapy or medical diagnosis.
             </p>
           </div>
         </section>
@@ -285,13 +285,14 @@ function ChatPage() {
         <aside className="chat-side-panel">
           <div className="wellness-card">
             <div className="wellness-card-header">
-              <h3>📊 Emotional Signals</h3>
+              <h3>Emotional Signals</h3>
+              <span className="card-subnote">Real-time</span>
             </div>
             {analysisResult ? (
               <div className="emotion-signal-list">
                 <div className="signal-item">
                   <span className="signal-label">Sentiment</span>
-                  <span className={`signal-tag tag-${(analysisResult.sentiment?.label || 'neutral').toLowerCase()}`}>
+                  <span className={`tag tag-${(analysisResult.sentiment?.label || 'neutral').toLowerCase()}`}>
                     {analysisResult.sentiment?.label || 'Neutral'}
                   </span>
                 </div>
@@ -311,7 +312,8 @@ function ChatPage() {
 
           <div className="wellness-card support-card-subtle">
             <div className="wellness-card-header">
-              <h3>🤍 24/7 Human Helplines</h3>
+              <h3>24/7 Human Helplines</h3>
+              <span className="card-subnote">Confidential</span>
             </div>
             <div className="helpline-compact-list">
               {helplines.slice(0, 3).map((h) => (

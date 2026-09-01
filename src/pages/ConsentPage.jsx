@@ -44,7 +44,7 @@ function ConsentPage() {
 
     if (missingRequired) {
       setError(
-        'Please agree to all required items before continuing.'
+        'Please agree to all required statements before continuing.'
       );
       return;
     }
@@ -65,19 +65,19 @@ function ConsentPage() {
   };
 
   const handleBack = () => {
-    navigate('/welcome');
+    navigate('/login');
   };
 
   const requiredItems = [
     {
       id: 'purpose',
       text:
-        'I understand that this system is designed to monitor psychological well-being and identify distress patterns for victims and witnesses involved in legal proceedings.',
+        'I understand that this system is designed to monitor psychological well-being and identify distress patterns for personal supportive care.',
     },
     {
       id: 'voluntary',
       text:
-        'I understand that participation is completely voluntary.',
+        'I understand that my participation is completely voluntary.',
     },
     {
       id: 'withdraw',
@@ -87,17 +87,17 @@ function ConsentPage() {
     {
       id: 'noDiagnosis',
       text:
-        'I understand that this system does not provide medical diagnoses. All outputs are AI-generated risk indicators that require professional review.',
+        'I understand that this system does not provide medical diagnoses. All outputs are supportive wellbeing indicators.',
     },
     {
       id: 'privacy',
       text:
-        'I understand how my information will be stored, protected, and used as described in the Privacy Policy.',
+        'I understand how my information will be protected and stored as described in the Privacy Policy.',
     },
     {
       id: 'escalation',
       text:
-        'I understand that if the system detects high-risk situations, my case may be escalated to qualified professionals or authorities according to safety procedures.',
+        'I understand that if high-risk distress is detected, emergency helpline recommendations and professional care resources will be shown.',
     },
   ];
 
@@ -105,32 +105,27 @@ function ConsentPage() {
     {
       id: 'questionnaire',
       text:
-        'I consent to the analysis of my questionnaire responses for well-being monitoring purposes.',
+        'I consent to the analysis of my daily check-in responses for longitudinal well-being monitoring.',
     },
     {
       id: 'textAnalysis',
       text:
-        'I consent to the analysis of text I provide in chat interactions for sentiment and emotion signal detection.',
+        'I consent to the analysis of text I provide in chat interactions for real-time sentiment and tone signal detection.',
     },
     {
       id: 'voiceAnalysis',
       text:
-        'I consent to optional voice analysis. I understand this is experimental technology.',
+        'I consent to optional voice reflection analysis if used in experimental demonstrations.',
     },
     {
       id: 'research',
       text:
-        'I consent to my anonymized data being used for research purposes to improve this system.',
+        'I consent to my anonymized data being used for research purposes to improve this mental health monitoring system.',
     },
   ];
 
   return (
     <div className="consent-page">
-
-      {/* Decorative background */}
-      <div className="consent-decoration consent-decoration-one"></div>
-      <div className="consent-decoration consent-decoration-two"></div>
-
       <main className="consent-wrapper">
 
         {/* Progress */}
@@ -161,11 +156,10 @@ function ConsentPage() {
             BEFORE YOU BEGIN
           </div>
 
-          <h1>Your choice matters.</h1>
+          <h1>Informed Consent & Privacy</h1>
 
           <p>
-            Please take a moment to understand how Mental Health
-            Monitor works and how your information may be used.
+            Please take a moment to understand how Mental Health Monitor works and how your reflections are protected.
             You are always in control of what you choose to share.
           </p>
         </section>
@@ -174,58 +168,45 @@ function ConsentPage() {
         <section className="consent-card">
 
           <div className="consent-card-header">
-
             <div className="consent-icon">
               ♡
             </div>
-
             <div>
-              <h2>Informed Consent</h2>
-
-              <p>
-                Please read each statement carefully.
-                Items marked with <strong>*</strong> are required.
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 750, color: 'var(--text-main)' }}>Consent Declaration</h2>
+              <p style={{ fontSize: '0.84rem', color: 'var(--text-secondary)' }}>
+                Please review each item carefully. Items marked with <strong style={{ color: 'var(--terracotta)' }}>*</strong> are required.
               </p>
             </div>
-
           </div>
-
-          <div className="consent-divider"></div>
 
           {/* Document information */}
           <div className="consent-meta">
             <div>
               <span>DOCUMENT VERSION</span>
-              <strong>1.0</strong>
+              <strong>1.0 (Clinical Protocol)</strong>
             </div>
 
             <div>
-              <span>DATE</span>
-              <strong>31 August 2026</strong>
+              <span>LAST UPDATED</span>
+              <strong>September 2026</strong>
             </div>
           </div>
 
           {/* Required section */}
           <div className="consent-section">
-
             <div className="consent-section-heading">
-
               <div className="section-number">
                 01
               </div>
-
               <div>
-                <h3>Required for participation</h3>
+                <h3>Required for Participation</h3>
                 <p>
-                  These items are necessary to use the
-                  monitoring system.
+                  These statements ensure a safe, informed monitoring environment.
                 </p>
               </div>
-
             </div>
 
             <div className="consent-items">
-
               {requiredItems.map((item) => (
                 <label
                   className={`consent-option ${
@@ -233,7 +214,6 @@ function ConsentPage() {
                   }`}
                   key={item.id}
                 >
-
                   <input
                     type="checkbox"
                     checked={consent[item.id]}
@@ -246,40 +226,30 @@ function ConsentPage() {
 
                   <span className="consent-option-text">
                     {item.text}
-
                     <span className="required-label">
                       REQUIRED *
                     </span>
                   </span>
-
                 </label>
               ))}
-
             </div>
-
           </div>
 
           {/* Optional section */}
-          <div className="consent-section optional-section">
-
+          <div className="consent-section">
             <div className="consent-section-heading">
-
               <div className="section-number">
                 02
               </div>
-
               <div>
-                <h3>Optional preferences</h3>
+                <h3>Optional Feature Preferences</h3>
                 <p>
-                  You may choose which additional features
-                  you are comfortable using.
+                  You may choose which additional analytics you feel comfortable enabling.
                 </p>
               </div>
-
             </div>
 
             <div className="consent-items">
-
               {optionalItems.map((item) => (
                 <label
                   className={`consent-option ${
@@ -287,7 +257,6 @@ function ConsentPage() {
                   }`}
                   key={item.id}
                 >
-
                   <input
                     type="checkbox"
                     checked={consent[item.id]}
@@ -301,12 +270,9 @@ function ConsentPage() {
                   <span className="consent-option-text">
                     {item.text}
                   </span>
-
                 </label>
               ))}
-
             </div>
-
           </div>
 
           {/* Error */}
@@ -319,36 +285,25 @@ function ConsentPage() {
 
           {/* Support message */}
           <div className="consent-support">
-
-            <div className="support-icon">
-              ♡
-            </div>
-
+            <div className="support-icon">♡</div>
             <div>
-              <strong>You are in control.</strong>
-
+              <strong>You are in control at all times.</strong>
               <p>
-                You can review your choices and change your
-                preferences later. Your well-being and privacy
-                remain important throughout the process.
+                You can review your choices, download your data, or withdraw consent whenever you wish.
               </p>
             </div>
-
           </div>
 
           {/* Footer */}
           <div className="consent-footer">
-
             <p className="consent-note">
-              Your consent will be stored together with the
-              consent document version and date.
+              Your consent timestamp will be safely stored in your local session.
             </p>
 
             <div className="consent-actions">
-
               <button
                 type="button"
-                className="btn-secondary"
+                className="btn btn-secondary"
                 onClick={handleBack}
               >
                 Back
@@ -356,14 +311,12 @@ function ConsentPage() {
 
               <button
                 type="button"
-                className="btn-primary"
+                className="btn btn-primary"
                 onClick={handleContinue}
               >
                 Agree & Continue →
               </button>
-
             </div>
-
           </div>
 
         </section>
@@ -372,13 +325,11 @@ function ConsentPage() {
         <div className="consent-bottom-message">
           <span>🔒</span>
           <p>
-            Your information is handled with care and used only
-            for the purposes explained above.
+            Your information is handled with care and confidential safety standards.
           </p>
         </div>
 
       </main>
-
     </div>
   );
 }
