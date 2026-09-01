@@ -1,5 +1,5 @@
 import React from 'react';
-import { getRiskColor, getRiskBgColor } from '../utils/scoring';
+import { getRiskColor, getRiskBgColor } from '../utils/scoringUtils';
 
 function RiskBadge({ level, score, size = 'medium' }) {
   const color = getRiskColor(level);

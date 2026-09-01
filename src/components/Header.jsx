@@ -1,74 +1,92 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { useData } from '../context/DataContext';
+import React from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 
 function Header() {
-  const { user, isDemo, logout, enterDemoMode } = useAuth();
-  const { currentDistress } = useData();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout();
-    navigate('/');
+    localStorage.removeItem("user");
+    navigate("/");
   };
 
-  return (
-    <header className="app-header">
-      <div className="header-container">
-        <Link to="/" className="logo">
-          <span className="logo-icon">🛡️</span>
-          <span className="logo-text">Mental Health Monitor</span>
-        </Link>
+  const navClass = ({ isActive }) =>
+    `nav-link ${isActive ? "active" : ""}`;
 
+  return (
+    <header className="site-header">
+      <div className="header-inner">
+
+        {/* BRAND */}
+        <NavLink to="/dashboard" className="brand">
+          <span className="brand-mark">♥</span>
+          <span>Mental Health Monitor</span>
+        </NavLink>
+
+
+        {/* MAIN NAVIGATION */}
         <nav className="main-nav">
-          {user ? (
-            <>
-              <Link to="/dashboard" className="nav-link">Dashboard</Link>
-              <Link to="/checkin" className="nav-link">Check-in</Link>
-              <Link to="/chat" className="nav-link">Support</Link>
-              <Link to="/trends" className="nav-link">Trends</Link>
-              <Link to="/help" className="nav-link help-link">Get Help</Link>
-              {user.role === 'admin' && (
-                <Link to="/admin" className="nav-link">Admin</Link>
-              )}
-            </>
-          ) : (
-            <>
-              <Link to="/about" className="nav-link">About</Link>
-              <Link to="/help" className="nav-link help-link">Get Help</Link>
-            </>
-          )}
+
+          <NavLink
+            to="/dashboard"
+            className={navClass}
+          >
+            Dashboard
+          </NavLink>
+
+          <NavLink
+            to="/check-in"
+            className={navClass}
+          >
+            Check-in
+          </NavLink>
+
+          <NavLink
+            to="/help"
+            className={navClass}
+          >
+            Support
+          </NavLink>
+
+          <NavLink
+            to="/trends"
+            className={navClass}
+          >
+            Trends
+          </NavLink>
+
+          <NavLink
+            to="/help"
+            className={({ isActive }) =>
+              `nav-link ${isActive ? "active" : ""}`
+            }
+          >
+            Get Help
+          </NavLink>
+
         </nav>
 
-        <div className="header-actions">
-          {isDemo && (
-            <span className="demo-badge">DEMO MODE</span>
-          )}
-          
-          {user && currentDistress && (
-            <Link to="/dashboard" className="distress-indicator" title="Your distress score">
-              <span className="distress-label">Distress:</span>
-              <span className={`distress-value level-${currentDistress.riskLevel?.toLowerCase()}`}>
-                {currentDistress.score}
-              </span>
-            </Link>
-          )}
 
-          {user ? (
-            <div className="user-menu">
-              <span className="user-name">{user.name}</span>
-              <button onClick={handleLogout} className="btn-logout">Logout</button>
-            </div>
-          ) : (
-            <div className="auth-buttons">
-              {!isDemo && (
-                <button onClick={enterDemoMode} className="btn-demo">Demo</button>
-              )}
-              <Link to="/login" className="btn-login">Login</Link>
-            </div>
-          )}
+        {/* RIGHT SIDE */}
+        <div className="header-right">
+
+          <div className="distress-indicator">
+            <span>Distress</span>
+            <span className="distress-value">—</span>
+          </div>
+
+          <span className="user-name">
+            User
+          </span>
+
+          <button
+            className="logout-button"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
+
         </div>
+
       </div>
     </header>
   );

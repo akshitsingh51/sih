@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useData } from '../context/DataContext';
-import { dailyCheckInQuestions } from '../data/questions';
-import { calculateDistressScore } from '../services/distressService';
+import { dailyCheckInQuestions } from '../data/assessmentQuestions';
+import { calculateDistressScore } from '../services/distressScoreService';
 import { analyzeSentiment } from '../services/sentimentService';
 import CrisisPanel from '../components/CrisisPanel';
 import ExplainableAI from '../components/ExplainableAI';

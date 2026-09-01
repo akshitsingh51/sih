@@ -1,0 +1,381 @@
+/* ---------------------------------------------------------------
+   Tokens
+--------------------------------------------------------------- */
+.app-shell {
+    --bg: #F5F7F5;
+    --surface: #FFFFFF;
+    --ink: #1F2A27;
+    --ink-soft: #5B6864;
+    --line: #E1E7E3;
+  
+    --teal-900: #26433C;
+    --teal-700: #3F6C63;
+    --teal-300: #8FB9AE;
+    --teal-100: #E6EFEC;
+  
+    --risk-low: #4C8572;
+    --risk-moderate: #C08A3E;
+    --risk-high: #B15A4A;
+  
+    --font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --space-7: 48px;
+    --space-8: 64px;
+  
+    --radius-sm: 8px;
+    --radius-md: 14px;
+  
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+  }
+  
+  .app-shell * {
+    box-sizing: border-box;
+  }
+  
+  /* ---------------------------------------------------------------
+     Navigation
+  --------------------------------------------------------------- */
+  .app-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    padding: var(--space-4) var(--space-7);
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  
+  .app-nav__brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    color: var(--teal-900);
+    text-decoration: none;
+    margin-right: var(--space-4);
+  }
+  
+  .app-nav__mark {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--teal-700), var(--teal-300));
+    flex-shrink: 0;
+  }
+  
+  .app-nav__links {
+    display: flex;
+    gap: var(--space-6);
+    flex: 1;
+  }
+  
+  .app-nav__link {
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: var(--space-2) 0;
+    border-bottom: 2px solid transparent;
+  }
+  
+  .app-nav__link:hover {
+    color: var(--ink);
+  }
+  
+  .app-nav__link.active {
+    color: var(--teal-900);
+    border-bottom-color: var(--teal-700);
+    font-weight: 600;
+  }
+  
+  .app-nav__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+  }
+  
+  .app-nav__help {
+    font-size: 0.9rem;
+    color: var(--teal-900);
+    text-decoration: none;
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid var(--teal-300);
+    border-radius: 999px;
+  }
+  
+  .app-nav__help:hover {
+    background: var(--teal-100);
+  }
+  
+  .app-nav__avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--teal-100);
+    color: var(--teal-900);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  
+  /* ---------------------------------------------------------------
+     Page layout
+  --------------------------------------------------------------- */
+  .dashboard {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: var(--space-7) var(--space-5) var(--space-8);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-7);
+  }
+  
+  .dashboard__greeting h1 {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 500;
+    margin: 0 0 var(--space-2);
+    color: var(--teal-900);
+  }
+  
+  .dashboard__greeting p {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 1rem;
+  }
+  
+  /* ---------------------------------------------------------------
+     Empty state
+  --------------------------------------------------------------- */
+  .empty-state {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: var(--space-7);
+    max-width: 560px;
+  }
+  
+  .empty-state h2 {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    margin: 0 0 var(--space-3);
+  }
+  
+  .empty-state p {
+    color: var(--ink-soft);
+    line-height: 1.6;
+    margin: 0 0 var(--space-5);
+    max-width: 60ch;
+  }
+  
+  .btn-primary {
+    display: inline-block;
+    background: var(--teal-700);
+    color: #fff;
+    text-decoration: none;
+    padding: var(--space-3) var(--space-5);
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+  }
+  
+  .btn-primary:hover {
+    background: var(--teal-900);
+  }
+  
+  /* ---------------------------------------------------------------
+     Hero row: score panel + metric strip
+  --------------------------------------------------------------- */
+  .hero-row {
+    display: grid;
+    grid-template-columns: minmax(260px, 1fr) 1.4fr;
+    gap: var(--space-5);
+    align-items: stretch;
+  }
+  
+  .score-panel {
+    background: var(--teal-900);
+    color: #fff;
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  
+  .score-panel__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .score-panel__label {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .score-panel__value {
+    font-family: var(--font-display);
+    font-size: 3.25rem;
+    line-height: 1;
+  }
+  
+  .score-panel__copy {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.5;
+    max-width: 42ch;
+  }
+  
+  .metric-strip {
+    list-style: none;
+    margin: 0;
+    padding: var(--space-2) 0;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .metric-strip__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-3) var(--space-5);
+  }
+  
+  .metric-strip__item + .metric-strip__item {
+    border-top: 1px solid var(--line);
+  }
+  
+  .metric-strip__label {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+  
+  .metric-strip__value {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  
+  /* ---------------------------------------------------------------
+     Panels: insight + trend
+  --------------------------------------------------------------- */
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
+  }
+  
+  .panel h2 {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin: 0 0 var(--space-4);
+  }
+  
+  .panel--insight {
+    border-left: 3px solid var(--teal-300);
+  }
+  
+  .panel__empty {
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  
+  /* ---------------------------------------------------------------
+     Next steps
+  --------------------------------------------------------------- */
+  .next-steps h2 {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin: 0 0 var(--space-4);
+  }
+  
+  .next-steps__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+  }
+  
+  .step-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: var(--space-5);
+    text-decoration: none;
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+  
+  .step-card:hover {
+    border-color: var(--teal-300);
+  }
+  
+  .step-card__title {
+    font-weight: 600;
+  }
+  
+  .step-card__copy {
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+  }
+  
+  .step-card--urgent {
+    border: 1px solid var(--teal-700);
+    background: var(--teal-100);
+  }
+  
+  .step-card--urgent .step-card__title {
+    color: var(--teal-900);
+  }
+  
+  /* ---------------------------------------------------------------
+     Responsive
+  --------------------------------------------------------------- */
+  @media (max-width: 780px) {
+    .app-nav {
+      padding: var(--space-3) var(--space-4);
+      gap: var(--space-4);
+    }
+  
+    .app-nav__links {
+      display: none;
+    }
+  
+    .hero-row {
+      grid-template-columns: 1fr;
+    }
+  
+    .next-steps__grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .dashboard {
+      padding: var(--space-5) var(--space-4) var(--space-7);
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .app-shell * {
+      transition: none !important;
+    }
+  }

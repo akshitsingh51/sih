@@ -1,113 +1,81 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from './context/AuthContext';
-import { DataProvider } from './context/DataContext';
-import Header from './components/Header';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-// Pages
+import { AuthProvider } from './context/AuthContext';
+import { DataProvider } from './context/DataContext';
+
 import WelcomePage from './pages/WelcomePage';
-import LoginPage from './pages/LoginPage';
 import ConsentPage from './pages/ConsentPage';
-import BaselinePage from './pages/BaseLinePage';
+import LoginPage from './pages/LoginPage';
+import BaselinePage from './pages/BaselinePage';
 import DashboardPage from './pages/DashboardPage';
 import CheckInPage from './pages/CheckInPage';
 import ChatPage from './pages/ChatPage';
 import TrendsPage from './pages/TrendsPage';
 import HelpPage from './pages/HelpPage';
-import ResearchPage from './pages/ResearchPage';
-import PrivacyPage from './pages/PrivacyPage';
-import LimitationsPage from './pages/LimitationsPage';
 import DemoPage from './pages/DemoPage';
-
-import './App.css';
-
-// Protected Route wrapper
-function ProtectedRoute({ children, requireConsent = false, requireBaseline = false }) {
-  const { user } = useAuth();
-  
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
-  
-  if (requireConsent && !user.consentSigned) {
-    return <Navigate to="/consent" replace />;
-  }
-  
-  if (requireBaseline && !user.baselineComplete) {
-    return <Navigate to="/baseline" replace />;
-  }
-  
-  return children;
-}
-
-function AppRoutes() {
-  return (
-    <>
-      <Header />
-      <main className="main-content">
-        <Routes>
-          {/* Public Routes */}
-          <Route path="/" element={<WelcomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/help" element={<HelpPage />} />
-          <Route path="/research" element={<ResearchPage />} />
-          <Route path="/privacy" element={<PrivacyPage />} />
-          <Route path="/limitations" element={<LimitationsPage />} />
-          <Route path="/demo" element={<DemoPage />} />
-          
-          {/* Protected Routes */}
-          <Route path="/consent" element={
-            <ProtectedRoute>
-              <ConsentPage />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/baseline" element={
-            <ProtectedRoute requireConsent>
-              <BaselinePage />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/dashboard" element={
-            <ProtectedRoute requireConsent requireBaseline>
-              <DashboardPage />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/checkin" element={
-            <ProtectedRoute requireConsent requireBaseline>
-              <CheckInPage />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/chat" element={
-            <ProtectedRoute requireConsent requireBaseline>
-              <ChatPage />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/trends" element={
-            <ProtectedRoute requireConsent requireBaseline>
-              <TrendsPage />
-            </ProtectedRoute>
-          } />
-        </Routes>
-      </main>
-    </>
-  );
-}
+import PrivacyPage from './pages/PrivacyPage';
+import ResearchPage from './pages/ResearchPage';
+import LimitationsPage from './pages/LimitationsPage';
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <AuthProvider>
         <DataProvider>
-          <div className="app">
-            <AppRoutes />
-          </div>
+
+          <Routes>
+
+            {/* Landing Page */}
+            <Route path="/" element={<WelcomePage />} />
+
+            {/* Consent */}
+            <Route path="/consent" element={<ConsentPage />} />
+
+            {/* Login / Registration */}
+            <Route path="/login" element={<LoginPage />} />
+
+            {/* Baseline Assessment */}
+            <Route path="/baseline" element={<BaselinePage />} />
+
+            {/* Main Dashboard */}
+            <Route path="/dashboard" element={<DashboardPage />} />
+
+            {/* Daily Check-In */}
+            <Route path="/check-in" element={<CheckInPage />} />
+
+            {/* Chat */}
+            <Route path="/chat" element={<ChatPage />} />
+
+            {/* Trends */}
+            <Route path="/trends" element={<TrendsPage />} />
+
+            {/* Help & Emergency Support */}
+            <Route path="/help" element={<HelpPage />} />
+
+            {/* Demo */}
+            <Route path="/demo" element={<DemoPage />} />
+
+            {/* Privacy */}
+            <Route path="/privacy" element={<PrivacyPage />} />
+
+            {/* Research */}
+            <Route path="/research" element={<ResearchPage />} />
+
+            {/* Limitations */}
+            <Route path="/limitations" element={<LimitationsPage />} />
+
+            {/* Unknown URL → Welcome */}
+            <Route
+              path="*"
+              element={<Navigate to="/" replace />}
+            />
+
+          </Routes>
+
         </DataProvider>
       </AuthProvider>
-    </Router>
+    </BrowserRouter>
   );
 }
 

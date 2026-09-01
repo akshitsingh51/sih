@@ -1,118 +1,154 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function WelcomePage() {
-  const { user, enterDemoMode } = useAuth();
+  const navigate = useNavigate();
 
   return (
-    <div className="welcome-page">
-      <section className="hero-section">
-        <div className="hero-content">
-          <span className="hero-icon">🛡️</span>
-          <h1>AI-Powered Dynamic Mental Health Monitoring</h1>
-          <p className="hero-subtitle">
-            Continuous support, early distress detection, and evidence-informed 
-            intervention for victims and witnesses.
+    <main className="welcome-page">
+
+      <div className="welcome-container">
+
+        {/* LEFT CONTENT */}
+        <section className="welcome-content">
+
+          <div className="welcome-eyebrow">
+            A space for you
+          </div>
+
+          <h1>
+            Your well-being
+            <br />
+            <span>matters.</span>
+          </h1>
+
+          <p className="welcome-description">
+            Mental Health Monitor gives you a calm and private space
+            to check in with yourself, understand changes in your
+            well-being, and connect with support when you need it.
           </p>
-          
-          <div className="hero-actions">
-            {user ? (
-              <Link to="/dashboard" className="btn-primary btn-large">
-                Go to Dashboard
-              </Link>
-            ) : (
-              <>
-                <Link to="/login" className="btn-primary btn-large">
-                  Start Monitoring
-                </Link>
-                <Link to="/login" className="btn-secondary btn-large">
-                  Login
-                </Link>
-                <button onClick={enterDemoMode} className="btn-outline btn-large">
-                  Try Demo
-                </button>
-              </>
-            )}
-          </div>
-        </div>
-      </section>
 
-      <section className="features-section">
-        <h2>How It Works</h2>
-        <div className="features-grid">
-          <div className="feature-card">
-            <span className="feature-icon">📊</span>
-            <h3>Continuous Monitoring</h3>
-            <p>Track your well-being over time with regular, brief check-ins.</p>
-          </div>
-          <div className="feature-card">
-            <span className="feature-icon">🤖</span>
-            <h3>AI-Powered Analysis</h3>
-            <p>Advanced algorithms help identify patterns and changes in distress levels.</p>
-          </div>
-          <div className="feature-card">
-            <span className="feature-icon">📈</span>
-            <h3>Explainable Results</h3>
-            <p>Understand why the system generates specific scores and recommendations.</p>
-          </div>
-          <div className="feature-card">
-            <span className="feature-icon">🔔</span>
-            <h3>Early Alerts</h3>
-            <p>Get notified when professional support may be beneficial.</p>
-          </div>
-          <div className="feature-card">
-            <span className="feature-icon">🤝</span>
-            <h3>Human Support</h3>
-            <p>Connect with counselors and authorities when needed.</p>
-          </div>
-          <div className="feature-card">
-            <span className="feature-icon">🔒</span>
-            <h3>Privacy First</h3>
-            <p>Your data is protected with encryption and strict access controls.</p>
-          </div>
-        </div>
-      </section>
+          <div className="welcome-actions">
 
-      <section className="privacy-section">
-        <h2>Privacy & Safety</h2>
-        <div className="privacy-content">
-          <ul>
-            <li>Your participation is completely voluntary</li>
-            <li>You can stop using the system at any time</li>
-            <li>Your data is encrypted and securely stored</li>
-            <li>Only authorized personnel can access case information</li>
-            <li>This system does not provide medical diagnoses</li>
-            <li>Professional review is available for all assessments</li>
-          </ul>
-        </div>
-      </section>
+            <button
+              className="btn btn-primary"
+              onClick={() => navigate("/login")}
+            >
+              Get started
+            </button>
 
-      <section className="research-section">
-        <h2>Research & Evidence</h2>
-        <p>
-          This system is built on established psychological research and validated 
-          assessment methodologies. All AI outputs are clearly explained with their 
-          psychological basis and limitations.
-        </p>
-        <Link to="/research" className="btn-secondary">
-          Learn More About Our Approach
-        </Link>
-      </section>
+            <button
+              className="btn btn-secondary"
+              onClick={() => navigate("/help")}
+            >
+              Find support
+            </button>
 
-      <section className="emergency-section">
-        <div className="emergency-card">
-          <h2>🆘 Emergency Help</h2>
-          <p>If you or someone you know needs immediate assistance:</p>
-          <div className="emergency-numbers">
-            <a href="tel:112" className="emergency-btn">🚨 Emergency: 112</a>
-            <a href="tel:100" className="emergency-btn">🚔 Police: 100</a>
-            <a href="tel:181" className="emergency-btn">👩 Women: 181</a>
-            <a href="tel:14416" className="emergency-btn">🧠 Mental Health: 14416</a>
           </div>
-        </div>
-      </section>
-    </div>
+
+
+          <div className="welcome-support">
+
+            <div className="support-icon">
+              ♥
+            </div>
+
+            <p>
+              You are in control of your journey.
+              Your check-ins are designed to help you
+              notice patterns and seek appropriate support —
+              not to replace professional care.
+            </p>
+
+          </div>
+
+        </section>
+
+
+        {/* RIGHT VISUAL */}
+        <section className="welcome-visual">
+
+          <div className="welcome-card">
+
+            <div className="welcome-card-label">
+              Your space
+            </div>
+
+            <h2>
+              A moment to pause.
+            </h2>
+
+            <p>
+              Sometimes a small check-in can help you
+              understand how you're doing today.
+            </p>
+
+            <div className="welcome-card-divider" />
+
+
+            <div className="welcome-card-row">
+
+              <div className="card-dot">
+                01
+              </div>
+
+              <div>
+                <strong>
+                  Check in
+                </strong>
+
+                <span>
+                  Tell us how you're feeling.
+                </span>
+              </div>
+
+            </div>
+
+
+            <div className="welcome-card-row">
+
+              <div className="card-dot">
+                02
+              </div>
+
+              <div>
+                <strong>
+                  Understand
+                </strong>
+
+                <span>
+                  Notice changes over time.
+                </span>
+              </div>
+
+            </div>
+
+
+            <div className="welcome-card-row">
+
+              <div className="card-dot">
+                03
+              </div>
+
+              <div>
+                <strong>
+                  Find support
+                </strong>
+
+                <span>
+                  Access help when you need it.
+                </span>
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+      </div>
+
+    </main>
   );
 }
 

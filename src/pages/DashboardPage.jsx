@@ -1,24 +1,38 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useData } from '../context/DataContext';
-import { calculateDistressScore } from '../services/distressService';
+import { calculateDistressScore } from '../services/distressScoreService';
 import RiskBadge from '../components/RiskBadge';
 import ExplainableAI from '../components/ExplainableAI';
 import { DistressTrendChart } from '../components/charts';
+import './DashboardPage.css';
+
+const METRICS = [
+  { key: 'daily_mood', label: 'Mood', kind: 'emoji' },
+  { key: 'daily_anxiety', label: 'Anxiety', kind: 'scale' },
+  { key: 'daily_sleep', label: 'Sleep', kind: 'emoji' },
+  { key: 'daily_safety', label: 'Feeling safe', kind: 'emoji' },
+  { key: 'daily_support', label: 'Support', kind: 'emoji' },
+];
+
+const RISK_COPY = {
+  LOW: "Things look steady. Keep doing what's working.",
+  MODERATE: "A few signs worth paying attention to today.",
+  HIGH: "It looks like today has been a lot to carry.",
+};
 
 function DashboardPage() {
   const { user } = useAuth();
   const { baseline, checkIns, currentDistress, updateDistress } = useData();
 
-  // Calculate current distress score
   useEffect(() => {
     if (baseline) {
       const latestCheckIn = checkIns.length > 0 ? checkIns[checkIns.length - 1] : null;
       const distress = calculateDistressScore(
         latestCheckIn?.responses || {},
         baseline.responses || {},
-        checkIns.map(c => ({ date: c.date, distressScore: c.distressScore }))
+        checkIns.map((c) => ({ date: c.date, distressScore: c.distressScore }))
       );
       updateDistress(distress);
     }
@@ -31,129 +45,132 @@ function DashboardPage() {
     return 'Good evening';
   };
 
+  const latest = checkIns.length > 0 ? checkIns[checkIns.length - 1] : null;
+  const riskLevel = currentDistress?.riskLevel || 'LOW';
+
   return (
-    <div className="dashboard-page">
-      <div className="dashboard-container">
-        <div className="dashboard-greeting">
-          <h1>{getTimeGreeting()}, {user?.name || 'User'}</h1>
-          <p>Your well-being snapshot</p>
+    <div className="app-shell">
+      <header className="app-nav">
+        <Link to="/dashboard" className="app-nav__brand">
+          <span className="app-nav__mark" aria-hidden="true" />
+          Wayfinder
+        </Link>
+
+        <nav className="app-nav__links" aria-label="Primary">
+          <NavLink to="/dashboard" className="app-nav__link" end>
+            Dashboard
+          </NavLink>
+          <NavLink to="/checkin" className="app-nav__link">
+            Check-in
+          </NavLink>
+          <NavLink to="/chat" className="app-nav__link">
+            Talk
+          </NavLink>
+          <NavLink to="/history" className="app-nav__link">
+            History
+          </NavLink>
+        </nav>
+
+        <div className="app-nav__actions">
+          <Link to="/help" className="app-nav__help">
+            Get human help
+          </Link>
+          <Link to="/profile" className="app-nav__avatar" aria-label="Your profile">
+            {(user?.name || 'U').charAt(0).toUpperCase()}
+          </Link>
         </div>
+      </header>
+
+      <main className="dashboard">
+        <section className="dashboard__greeting">
+          <h1>
+            {getTimeGreeting()}, {user?.name || 'there'}
+          </h1>
+          <p>Here's how the last few days have looked for you.</p>
+        </section>
 
         {!baseline ? (
-          <div className="dashboard-prompt">
-            <div className="prompt-card">
-              <h2>Complete Your Baseline Assessment</h2>
-              <p>To get started, please complete the initial well-being assessment.</p>
-              <Link to="/baseline" className="btn-primary">
-                Start Assessment
-              </Link>
-            </div>
-          </div>
+          <section className="empty-state">
+            <h2>Let's set a starting point</h2>
+            <p>
+              A short baseline assessment helps us tell the difference between an
+              ordinary rough day and a pattern worth noticing. It takes about five
+              minutes, and you can update it any time.
+            </p>
+            <Link to="/baseline" className="btn-primary">
+              Start the assessment
+            </Link>
+          </section>
         ) : (
           <>
-            {/* Current Status Cards */}
-            <div className="status-grid">
-              <div className="status-card distress-card">
-                <h3>Distress Score</h3>
-                <div className="big-score">
-                  {currentDistress?.score || '--'}
+            <section className="hero-row">
+              <div className="score-panel">
+                <div className="score-panel__top">
+                  <span className="score-panel__label">Distress score</span>
+                  <RiskBadge level={riskLevel} size="large" />
                 </div>
-                <RiskBadge level={currentDistress?.riskLevel || 'LOW'} size="large" />
+                <div className="score-panel__value">{currentDistress?.score ?? '—'}</div>
+                <p className="score-panel__copy">{RISK_COPY[riskLevel] || RISK_COPY.LOW}</p>
               </div>
 
-              <div className="status-card">
-                <h3>Mood</h3>
-                <div className="metric-value">
-                  {checkIns.length > 0 ? 
-                    getEmojiForScore(checkIns[checkIns.length - 1]?.responses?.daily_mood) : 
-                    '—'}
-                </div>
-                <span className="metric-label">Current</span>
-              </div>
+              <ul className="metric-strip">
+                {METRICS.map((metric) => (
+                  <li className="metric-strip__item" key={metric.key}>
+                    <span className="metric-strip__label">{metric.label}</span>
+                    <span className="metric-strip__value">
+                      {formatMetric(latest?.responses?.[metric.key], metric.kind)}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </section>
 
-              <div className="status-card">
-                <h3>Anxiety</h3>
-                <div className="metric-value">
-                  {checkIns.length > 0 ? 
-                    `${checkIns[checkIns.length - 1]?.responses?.daily_anxiety || '—'}/10` : 
-                    '—'}
-                </div>
-                <span className="metric-label">Level</span>
-              </div>
-
-              <div className="status-card">
-                <h3>Sleep</h3>
-                <div className="metric-value">
-                  {checkIns.length > 0 ? 
-                    getEmojiForScore(checkIns[checkIns.length - 1]?.responses?.daily_sleep) : 
-                    '—'}
-                </div>
-                <span className="metric-label">Quality</span>
-              </div>
-
-              <div className="status-card">
-                <h3>Safety</h3>
-                <div className="metric-value">
-                  {checkIns.length > 0 ? 
-                    getEmojiForScore(checkIns[checkIns.length - 1]?.responses?.daily_safety) : 
-                    '—'}
-                </div>
-                <span className="metric-label">Feeling</span>
-              </div>
-
-              <div className="status-card">
-                <h3>Support</h3>
-                <div className="metric-value">
-                  {checkIns.length > 0 ? 
-                    getEmojiForScore(checkIns[checkIns.length - 1]?.responses?.daily_support) : 
-                    '—'}
-                </div>
-                <span className="metric-label">Level</span>
-              </div>
-            </div>
-
-            {/* Explainable AI Section */}
             {currentDistress && (
-              <ExplainableAI distressData={currentDistress} />
+              <section className="panel panel--insight">
+                <h2>What's behind this score</h2>
+                <ExplainableAI distressData={currentDistress} />
+              </section>
             )}
 
-            {/* Trend Preview */}
-            <div className="trend-preview">
-              <h2>Your Recent Trend</h2>
+            <section className="panel">
+              <h2>Your recent trend</h2>
               {checkIns.length > 0 ? (
                 <DistressTrendChart data={checkIns} />
               ) : (
-                <p>Complete your first check-in to see your trend.</p>
+                <p className="panel__empty">
+                  Once you've logged a couple of check-ins, your trend will show up
+                  here.
+                </p>
               )}
-            </div>
+            </section>
 
-            {/* Quick Actions */}
-            <div className="quick-actions">
-              <h2>Recommended Next Steps</h2>
-              <div className="actions-grid">
-                <Link to="/checkin" className="action-card">
-                  <span className="action-icon">📝</span>
-                  <span className="action-text">Daily Check-in</span>
+            <section className="next-steps">
+              <h2>What would help right now</h2>
+              <div className="next-steps__grid">
+                <Link to="/checkin" className="step-card">
+                  <span className="step-card__title">Log today's check-in</span>
+                  <span className="step-card__copy">Takes under a minute.</span>
                 </Link>
-                <Link to="/chat" className="action-card">
-                  <span className="action-icon">💬</span>
-                  <span className="action-text">Talk to AI Support</span>
+                <Link to="/chat" className="step-card">
+                  <span className="step-card__title">Talk it through</span>
+                  <span className="step-card__copy">Your AI support is ready when you are.</span>
                 </Link>
-                <Link to="/help" className="action-card emergency">
-                  <span className="action-icon">🆘</span>
-                  <span className="action-text">Get Human Help</span>
+                <Link to="/help" className="step-card step-card--urgent">
+                  <span className="step-card__title">Reach a person</span>
+                  <span className="step-card__copy">Connect with real support, any time.</span>
                 </Link>
               </div>
-            </div>
+            </section>
           </>
         )}
-      </div>
+      </main>
     </div>
   );
 }
 
-function getEmojiForScore(score) {
+function formatMetric(score, kind) {
   if (!score) return '—';
+  if (kind === 'scale') return `${score}/10`;
   const emojis = ['😞', '😔', '😐', '🙂', '😊'];
   return emojis[Math.min(4, Math.max(0, score - 1))] || '—';
 }
