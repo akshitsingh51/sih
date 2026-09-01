@@ -143,7 +143,7 @@ function BaselinePage() {
 
         {/* Header */}
         <section style={{ textAlign: 'center', maxWidth: '640px', margin: '0 auto' }}>
-          <span className="intro-eyebrow" style={{ color: 'var(--terracotta)' }}>
+          <span className="intro-eyebrow" style={{ color: 'var(--accent)' }}>
             Initial Assessment
           </span>
           <h1 style={{ fontSize: '1.9rem', fontWeight: 800, color: 'var(--text-main)', marginTop: '4px', marginBottom: '8px' }}>
@@ -161,7 +161,7 @@ function BaselinePage() {
             <span>{Math.round(progress)}% Complete</span>
           </div>
           <div style={{ width: '100%', height: '5px', background: 'var(--border)', borderRadius: '3px', overflow: 'hidden' }}>
-            <div style={{ width: `${progress}%`, height: '100%', background: 'var(--primary-sage)', transition: 'width 0.25s ease' }} />
+            <div style={{ width: `${progress}%`, height: '100%', background: 'var(--primary)', transition: 'width 0.25s ease' }} />
           </div>
         </section>
 
@@ -172,7 +172,7 @@ function BaselinePage() {
             height: '38px',
             borderRadius: 'var(--radius-sm)',
             background: 'var(--primary-subtle)',
-            color: 'var(--deep-sage)',
+            color: 'var(--primary-hover)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -203,7 +203,7 @@ function BaselinePage() {
                     gap: '14px',
                     padding: '12px 16px',
                     borderRadius: 'var(--radius-sm)',
-                    border: selected ? '2px solid var(--primary-sage)' : '1px solid var(--border)',
+                    border: selected ? '2px solid var(--primary)' : '1px solid var(--border)',
                     background: selected ? 'var(--primary-subtle)' : 'var(--surface)',
                     cursor: 'pointer',
                     textAlign: 'left',
@@ -214,7 +214,7 @@ function BaselinePage() {
                     width: '28px',
                     height: '28px',
                     borderRadius: '6px',
-                    background: selected ? 'var(--primary-sage)' : 'var(--surface-muted)',
+                    background: selected ? 'var(--primary)' : 'var(--surface-muted)',
                     color: selected ? '#FFFFFF' : 'var(--text-secondary)',
                     display: 'flex',
                     alignItems: 'center',
@@ -226,11 +226,11 @@ function BaselinePage() {
                     {String.fromCharCode(65 + index)}
                   </span>
 
-                  <span style={{ flex: 1, fontSize: '0.9rem', fontWeight: selected ? 650 : 500, color: selected ? 'var(--deep-sage)' : 'var(--text-main)' }}>
+                  <span style={{ flex: 1, fontSize: '0.9rem', fontWeight: selected ? 650 : 500, color: 'var(--text-main)' }}>
                     {option}
                   </span>
 
-                  <span style={{ color: 'var(--deep-sage)', fontWeight: 800, fontSize: '14px' }}>
+                  <span style={{ color: 'var(--primary-hover)', fontWeight: 800, fontSize: '14px' }}>
                     {selected ? '✓' : ''}
                   </span>
                 </button>

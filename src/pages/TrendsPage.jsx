@@ -182,7 +182,7 @@ function TrendsPage() {
                         <td style={{ fontWeight: 650, color: 'var(--text-main)' }}>
                           {new Date(entry.date).toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' })}
                         </td>
-                        <td style={{ color: 'var(--deep-sage)', fontWeight: 750 }}>
+                        <td style={{ color: 'var(--text-main)', fontWeight: 750 }}>
                           {entry.distressScore ?? '—'}/100
                         </td>
                         <td>

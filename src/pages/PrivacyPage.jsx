@@ -68,10 +68,10 @@ function PrivacyPage() {
               <h3>Your Guaranteed Rights</h3>
             </div>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.88rem', color: 'var(--text-secondary)' }}>
-              <li style={{ lineHeight: 1.45, color: 'var(--deep-sage)', fontWeight: 600 }}>✓ Right to withdraw consent anytime</li>
-              <li style={{ lineHeight: 1.45, color: 'var(--deep-sage)', fontWeight: 600 }}>✓ Right to purge your check-in records</li>
-              <li style={{ lineHeight: 1.45, color: 'var(--deep-sage)', fontWeight: 600 }}>✓ Right to decline specific survey questions</li>
-              <li style={{ lineHeight: 1.45, color: 'var(--deep-sage)', fontWeight: 600 }}>✓ Right to understand how AI scores are derived</li>
+              <li style={{ lineHeight: 1.45, color: 'var(--primary-hover)', fontWeight: 600 }}>✓ Right to withdraw consent anytime</li>
+              <li style={{ lineHeight: 1.45, color: 'var(--primary-hover)', fontWeight: 600 }}>✓ Right to purge your check-in records</li>
+              <li style={{ lineHeight: 1.45, color: 'var(--primary-hover)', fontWeight: 600 }}>✓ Right to decline specific survey questions</li>
+              <li style={{ lineHeight: 1.45, color: 'var(--primary-hover)', fontWeight: 600 }}>✓ Right to understand how AI scores are derived</li>
             </ul>
           </section>
         </div>

@@ -1,5 +1,5 @@
 /* =========================================================
-   DASHBOARD PAGE — WARM SAGE THEME 🌿
+   DASHBOARD PAGE — DARK BLUE-TEAL THEME 🌊
    ========================================================= */
 
 .dashboard-page {
@@ -48,12 +48,12 @@
   font-weight: 750;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--deep-sage);
+  color: var(--primary-hover);
   margin-bottom: 6px;
 }
 
 .dashboard-intro h1 {
-  font-size: 2.15rem;
+  font-size: 2.125rem;
   font-weight: 800;
   color: var(--text-main);
   letter-spacing: -0.025em;
@@ -99,7 +99,7 @@
   height: 54px;
   border-radius: 50%;
   background: var(--primary-subtle);
-  color: var(--deep-sage);
+  color: var(--primary-hover);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -181,7 +181,7 @@
 .score-val {
   font-size: 2.75rem;
   font-weight: 800;
-  color: var(--deep-sage);
+  color: var(--text-main);
   line-height: 1;
   letter-spacing: -0.03em;
 }
@@ -294,7 +294,7 @@
   margin-top: 16px;
   padding: 14px 16px;
   background: var(--accent-subtle);
-  border: 1px solid rgba(197, 139, 104, 0.28);
+  border: 1px solid rgba(214, 154, 114, 0.25);
   border-radius: var(--radius-sm);
 }
 
@@ -302,7 +302,7 @@
   display: block;
   font-size: 0.72rem;
   font-weight: 750;
-  color: var(--terracotta);
+  color: var(--accent);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-bottom: 4px;
@@ -340,7 +340,7 @@
 }
 
 .nav-shortcut-card:hover {
-  border-color: var(--primary-sage);
+  border-color: var(--primary);
   box-shadow: var(--shadow-hover);
   transform: translateY(-2px);
 }
@@ -350,7 +350,7 @@
   height: 40px;
   border-radius: var(--radius-sm);
   background: var(--primary-subtle);
-  color: var(--deep-sage);
+  color: var(--primary-hover);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -360,7 +360,7 @@
 
 .support-shortcut .shortcut-icon-circle {
   background: var(--accent-subtle);
-  color: var(--terracotta);
+  color: var(--accent);
 }
 
 .shortcut-text-block {
@@ -387,6 +387,6 @@
 }
 
 .nav-shortcut-card:hover .arrow-icon {
-  color: var(--deep-sage);
+  color: var(--primary-hover);
   transform: translateX(4px);
 }

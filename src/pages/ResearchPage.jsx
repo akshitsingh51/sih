@@ -44,7 +44,7 @@ function ResearchPage() {
                   }}
                 >
                   <div>
-                    <span style={{ fontSize: '0.74rem', fontWeight: 750, color: 'var(--terracotta)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    <span style={{ fontSize: '0.74rem', fontWeight: 750, color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                       {ref.construct}
                     </span>
                     <h2 style={{ fontSize: '1.15rem', fontWeight: 750, color: 'var(--text-main)', marginTop: '2px' }}>
@@ -56,8 +56,8 @@ function ResearchPage() {
                     width: '32px',
                     height: '32px',
                     borderRadius: '50%',
-                    background: isExpanded ? 'var(--primary-sage)' : 'var(--surface-subtle)',
-                    color: isExpanded ? '#FFFFFF' : 'var(--deep-sage)',
+                    background: isExpanded ? 'var(--primary)' : 'var(--surface-subtle)',
+                    color: isExpanded ? '#FFFFFF' : 'var(--primary-hover)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -72,7 +72,7 @@ function ResearchPage() {
                 {isExpanded && (
                   <div style={{ marginTop: '18px', paddingTop: '16px', borderTop: '1px solid var(--border-subtle)', display: 'flex', flexDirection: 'column', gap: '14px' }}>
                     <div>
-                      <h4 style={{ fontSize: '0.84rem', fontWeight: 750, color: 'var(--deep-sage)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '4px' }}>
+                      <h4 style={{ fontSize: '0.84rem', fontWeight: 750, color: 'var(--primary-hover)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '4px' }}>
                         Why It Matters
                       </h4>
                       <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
@@ -81,7 +81,7 @@ function ResearchPage() {
                     </div>
 
                     <div>
-                      <h4 style={{ fontSize: '0.84rem', fontWeight: 750, color: 'var(--deep-sage)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '4px' }}>
+                      <h4 style={{ fontSize: '0.84rem', fontWeight: 750, color: 'var(--primary-hover)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '4px' }}>
                         How the System Uses It
                       </h4>
                       <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
@@ -90,7 +90,7 @@ function ResearchPage() {
                     </div>
 
                     <div style={{ padding: '12px 14px', background: 'var(--surface-subtle)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
-                      <h4 style={{ fontSize: '0.8rem', fontWeight: 750, color: 'var(--terracotta)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '4px' }}>
+                      <h4 style={{ fontSize: '0.8rem', fontWeight: 750, color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '4px' }}>
                         Construct Limitations
                       </h4>
                       <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.45 }}>

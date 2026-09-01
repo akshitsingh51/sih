@@ -107,7 +107,7 @@ function CheckInPage() {
                   Distress Score
                 </span>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: '3px' }}>
-                  <span style={{ fontSize: '2.2rem', fontWeight: 800, color: 'var(--deep-sage)', lineHeight: 1 }}>{result.score}</span>
+                  <span style={{ fontSize: '2.2rem', fontWeight: 800, color: 'var(--text-main)', lineHeight: 1 }}>{result.score}</span>
                   <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 600 }}>/100</span>
                 </div>
               </div>
@@ -163,7 +163,7 @@ function CheckInPage() {
         <div className="wellness-card" style={{ padding: '34px 30px' }}>
           
           <div style={{ marginBottom: '20px' }}>
-            <span className="intro-eyebrow" style={{ color: 'var(--deep-sage)' }}>
+            <span className="intro-eyebrow" style={{ color: 'var(--primary-hover)' }}>
               Daily Reflection
             </span>
             <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-main)', marginTop: '4px' }}>
@@ -181,14 +181,14 @@ function CheckInPage() {
               <span>{Math.round(progress)}% Complete</span>
             </div>
             <div style={{ width: '100%', height: '5px', background: 'var(--border)', borderRadius: '3px', overflow: 'hidden' }}>
-              <div style={{ width: `${progress}%`, height: '100%', background: 'var(--primary-sage)', transition: 'width 0.25s ease' }} />
+              <div style={{ width: `${progress}%`, height: '100%', background: 'var(--primary)', transition: 'width 0.25s ease' }} />
             </div>
           </div>
 
           {/* Question Card */}
           <div style={{ minHeight: '220px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <div>
-              <span style={{ fontSize: '0.74rem', fontWeight: 750, color: 'var(--terracotta)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+              <span style={{ fontSize: '0.74rem', fontWeight: 750, color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
                 {question.domain}
               </span>
               <h2 style={{ fontSize: '1.25rem', fontWeight: 750, color: 'var(--text-main)', margin: '6px 0 20px 0', lineHeight: 1.35 }}>
@@ -206,7 +206,7 @@ function CheckInPage() {
                         style={{
                           padding: '14px 8px',
                           background: isSelected ? 'var(--primary-subtle)' : 'var(--surface)',
-                          border: isSelected ? '2px solid var(--primary-sage)' : '1px solid var(--border)',
+                          border: isSelected ? '2px solid var(--primary)' : '1px solid var(--border)',
                           borderRadius: 'var(--radius-sm)',
                           display: 'flex',
                           flexDirection: 'column',
@@ -218,7 +218,7 @@ function CheckInPage() {
                         onClick={() => handleResponse(option.score)}
                       >
                         <span style={{ fontSize: '26px' }}>{option.emoji}</span>
-                        <span style={{ fontSize: '0.8rem', fontWeight: 650, color: isSelected ? 'var(--deep-sage)' : 'var(--text-main)' }}>
+                        <span style={{ fontSize: '0.8rem', fontWeight: 650, color: 'var(--text-main)' }}>
                           {option.label}
                         </span>
                       </button>
@@ -231,7 +231,7 @@ function CheckInPage() {
                 <div style={{ marginBottom: '22px', padding: '16px', background: 'var(--surface-subtle)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.84rem', color: 'var(--text-secondary)', marginBottom: '12px' }}>
                     <span>{question.labels[0]} (1)</span>
-                    <span style={{ fontWeight: 800, fontSize: '1.15rem', color: 'var(--deep-sage)', background: 'var(--surface)', padding: '2px 10px', borderRadius: '12px', border: '1px solid var(--border)' }}>
+                    <span style={{ fontWeight: 800, fontSize: '1.15rem', color: 'var(--text-main)', background: 'var(--surface)', padding: '2px 10px', borderRadius: '12px', border: '1px solid var(--border)' }}>
                       {responses[question.id] || 5}/10
                     </span>
                     <span>{question.labels[1]} (10)</span>
@@ -242,7 +242,7 @@ function CheckInPage() {
                     max={question.max}
                     value={responses[question.id] || 5}
                     onChange={(e) => setResponses({ ...responses, [question.id]: parseInt(e.target.value) })}
-                    style={{ width: '100%', accentColor: 'var(--primary-sage)', height: '6px', cursor: 'pointer', marginBottom: '16px' }}
+                    style={{ width: '100%', accentColor: 'var(--primary)', height: '6px', cursor: 'pointer', marginBottom: '16px' }}
                   />
                   <button
                     className="btn btn-primary"

@@ -174,7 +174,7 @@ function ConsentPage() {
             <div>
               <h2 style={{ fontSize: '1.25rem', fontWeight: 750, color: 'var(--text-main)' }}>Consent Declaration</h2>
               <p style={{ fontSize: '0.84rem', color: 'var(--text-secondary)' }}>
-                Please review each item carefully. Items marked with <strong style={{ color: 'var(--terracotta)' }}>*</strong> are required.
+                Please review each item carefully. Items marked with <strong style={{ color: 'var(--accent)' }}>*</strong> are required.
               </p>
             </div>
           </div>

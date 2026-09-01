@@ -12,22 +12,22 @@ function RiskBadge({ level = 'LOW', score, size = 'medium' }) {
   const getStyle = () => {
     if (normalizedLevel === 'LOW') {
       return {
-        background: '#F0F5EF',
-        color: '#718A6A',
-        border: '1px solid #D5E3D3'
+        background: 'var(--success-bg)',
+        color: 'var(--success)',
+        border: '1px solid var(--success-border)'
       };
     }
     if (normalizedLevel === 'MODERATE') {
       return {
-        background: '#FBF4EA',
-        color: '#C4935A',
-        border: '1px solid #F0DFC8'
+        background: 'var(--warning-bg)',
+        color: 'var(--warning)',
+        border: '1px solid var(--warning-border)'
       };
     }
     return {
-      background: '#FAF0EF',
-      color: '#B96A62',
-      border: '1px solid #EBCBC8'
+      background: 'var(--danger-bg)',
+      color: 'var(--danger)',
+      border: '1px solid var(--danger-border)'
     };
   };
 

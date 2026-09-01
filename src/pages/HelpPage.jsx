@@ -68,7 +68,7 @@ function HelpPage() {
             <h3 style={{ fontSize: '0.98rem', fontWeight: 750, color: 'var(--danger)', marginBottom: '4px' }}>
               Immediate Safety First
             </h3>
-            <p style={{ fontSize: '0.88rem', color: '#6A3121', lineHeight: 1.5 }}>
+            <p style={{ fontSize: '0.88rem', color: 'var(--text-main)', lineHeight: 1.5 }}>
               If you or someone around you is in immediate danger or experiencing severe thoughts of harm, please dial <strong>112</strong> or call the <strong>Tele-MANAS (14416)</strong> helpline immediately.
             </p>
           </div>
@@ -136,7 +136,7 @@ function HelpPage() {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px' }}>
               {recommendations.categories.selfCare && recommendations.categories.selfCare.length > 0 && (
                 <div style={{ background: 'var(--surface-subtle)', padding: '18px 20px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
-                  <h4 style={{ fontSize: '0.92rem', fontWeight: 750, color: 'var(--deep-sage)', marginBottom: '10px' }}>Self-Care Strategies</h4>
+                  <h4 style={{ fontSize: '0.92rem', fontWeight: 750, color: 'var(--primary-hover)', marginBottom: '10px' }}>Self-Care Strategies</h4>
                   <ul style={{ listStyle: 'none', fontSize: '0.84rem', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     {recommendations.categories.selfCare.map((c, i) => (
                       <li key={i} style={{ lineHeight: 1.45 }}>• {c}</li>
@@ -147,7 +147,7 @@ function HelpPage() {
 
               {recommendations.categories.counseling && recommendations.categories.counseling.length > 0 && (
                 <div style={{ background: 'var(--surface-subtle)', padding: '18px 20px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
-                  <h4 style={{ fontSize: '0.92rem', fontWeight: 750, color: 'var(--terracotta)', marginBottom: '10px' }}>Support & Counseling</h4>
+                  <h4 style={{ fontSize: '0.92rem', fontWeight: 750, color: 'var(--accent)', marginBottom: '10px' }}>Support & Counseling</h4>
                   <ul style={{ listStyle: 'none', fontSize: '0.84rem', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     {recommendations.categories.counseling.map((c, i) => (
                       <li key={i} style={{ lineHeight: 1.45 }}>• {c}</li>
@@ -158,7 +158,7 @@ function HelpPage() {
 
               {recommendations.specificRecommendations && recommendations.specificRecommendations.length > 0 && (
                 <div style={{ background: 'var(--surface-subtle)', padding: '18px 20px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
-                  <h4 style={{ fontSize: '0.92rem', fontWeight: 750, color: 'var(--deep-sage)', marginBottom: '10px' }}>Targeted Interventions</h4>
+                  <h4 style={{ fontSize: '0.92rem', fontWeight: 750, color: 'var(--primary-hover)', marginBottom: '10px' }}>Targeted Interventions</h4>
                   <ul style={{ listStyle: 'none', fontSize: '0.84rem', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     {recommendations.specificRecommendations.map((c, i) => (
                       <li key={i} style={{ lineHeight: 1.45 }}>• {c}</li>

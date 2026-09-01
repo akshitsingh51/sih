@@ -52,7 +52,7 @@ function LimitationsPage() {
                 height: '32px',
                 borderRadius: 'var(--radius-xs)',
                 background: 'var(--accent-subtle)',
-                color: 'var(--terracotta)',
+                color: 'var(--accent)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -73,7 +73,7 @@ function LimitationsPage() {
         </div>
 
         <section className="wellness-card" style={{ background: 'var(--surface-subtle)', border: '1px solid var(--border)' }}>
-          <h3 style={{ fontSize: '1.05rem', fontWeight: 750, color: 'var(--deep-sage)', marginBottom: '6px' }}>
+          <h3 style={{ fontSize: '1.05rem', fontWeight: 750, color: 'var(--text-main)', marginBottom: '6px' }}>
             Our Ethical Commitment
           </h3>
           <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>

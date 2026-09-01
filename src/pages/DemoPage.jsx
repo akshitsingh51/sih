@@ -43,7 +43,7 @@ function DemoPage() {
           <span style={{ fontSize: '20px' }}>⚠️</span>
           <div>
             <strong style={{ fontSize: '0.9rem', color: 'var(--warning)', display: 'block' }}>Synthetic Demonstration Data</strong>
-            <p style={{ fontSize: '0.84rem', color: '#66471E', lineHeight: 1.45 }}>{demoDisclaimer}</p>
+            <p style={{ fontSize: '0.84rem', color: 'var(--text-main)', lineHeight: 1.45 }}>{demoDisclaimer}</p>
           </div>
         </section>
 
@@ -89,7 +89,7 @@ function DemoPage() {
               <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 650, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                 Avg Distress Index
               </span>
-              <div style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--deep-sage)', marginTop: '4px' }}>
+              <div style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--text-main)', marginTop: '4px' }}>
                 {demoDistrictData.averageDistress}
               </div>
             </div>
@@ -126,7 +126,7 @@ function DemoPage() {
                     <td>
                       <RiskBadge level={caseItem.riskLevel} size="small" />
                     </td>
-                    <td style={{ fontWeight: 700, color: 'var(--deep-sage)' }}>{caseItem.latestDistressScore}/100</td>
+                    <td style={{ fontWeight: 700, color: 'var(--text-main)' }}>{caseItem.latestDistressScore}/100</td>
                     <td style={{ color: 'var(--text-secondary)', fontWeight: 600 }}>{caseItem.trend}</td>
                     <td style={{ color: 'var(--text-muted)' }}>{caseItem.lastCheckIn}</td>
                   </tr>

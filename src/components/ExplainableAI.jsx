@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 /**
- * ExplainableAI Component — Warm Sage Theme
+ * ExplainableAI Component — Dark Blue-Teal Theme
  */
 function ExplainableAI({ distressData }) {
   const [expanded, setExpanded] = useState(false);
@@ -22,7 +22,7 @@ function ExplainableAI({ distressData }) {
           </div>
         </div>
         <div style={{ marginLeft: 'auto', textAlign: 'right' }}>
-          <span style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--deep-sage)' }}>{score}</span>
+          <span style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--text-main)' }}>{score}</span>
           <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>/100</span>
         </div>
       </div>
@@ -44,8 +44,8 @@ function ExplainableAI({ distressData }) {
                   <span style={{ fontWeight: 600, color: 'var(--text-main)' }}>{factor.name}</span>
                   <span style={{ color: 'var(--text-muted)' }}>{factor.weight} weight</span>
                 </div>
-                <div style={{ width: '100%', height: '5px', background: 'rgba(113, 133, 107, 0.15)', borderRadius: '3px', overflow: 'hidden' }}>
-                  <div style={{ width: `${Math.min(100, factor.contribution)}%`, height: '100%', background: 'var(--primary-sage)', borderRadius: '3px' }} />
+                <div style={{ width: '100%', height: '5px', background: 'var(--surface-muted)', borderRadius: '3px', overflow: 'hidden' }}>
+                  <div style={{ width: `${Math.min(100, factor.contribution)}%`, height: '100%', background: 'var(--primary)', borderRadius: '3px' }} />
                 </div>
               </div>
             ))}
@@ -58,7 +58,7 @@ function ExplainableAI({ distressData }) {
         <button
           type="button"
           onClick={() => setExpanded(prev => !prev)}
-          style={{ fontSize: '0.78rem', color: 'var(--deep-sage)', fontWeight: 600, background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+          style={{ fontSize: '0.78rem', color: 'var(--primary-hover)', fontWeight: 600, background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
         >
           {expanded ? 'Hide clinical note ▴' : 'View clinical note & limitations ▾'}
         </button>
@@ -66,7 +66,7 @@ function ExplainableAI({ distressData }) {
         {expanded && (
           <div style={{ marginTop: '10px', padding: '12px 14px', background: 'var(--surface-subtle)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.45 }}>
             <p style={{ marginBottom: '4px' }}>
-              <strong>Notice:</strong> This score is a dynamic estimate based on your self-reported check-in responses and is intended for personal wellbeing monitoring, not a formal psychiatric diagnosis.
+              <strong style={{ color: 'var(--text-main)' }}>Notice:</strong> This score is a dynamic estimate based on your self-reported check-in responses and is intended for personal wellbeing monitoring, not a formal psychiatric diagnosis.
             </p>
             <p>
               If you are experiencing severe distress or thoughts of harm, please connect with 24/7 crisis resources or a healthcare professional.

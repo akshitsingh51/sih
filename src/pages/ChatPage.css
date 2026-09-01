@@ -1,5 +1,5 @@
 /* =========================================================
-   CHAT PAGE — WARM SAGE THEME 🌿
+   CHAT PAGE — DARK BLUE-TEAL THEME 🌊
    ========================================================= */
 
 .chat-page {
@@ -60,7 +60,7 @@
   height: 36px;
   border-radius: var(--radius-sm);
   background: var(--primary-subtle);
-  color: var(--deep-sage);
+  color: var(--primary-hover);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -129,7 +129,7 @@
   height: 52px;
   border-radius: 50%;
   background: var(--primary-subtle);
-  color: var(--deep-sage);
+  color: var(--primary-hover);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -178,12 +178,12 @@
 
 .starter-prompt-pill:hover {
   background: var(--primary-subtle);
-  border-color: var(--primary-sage);
-  color: var(--deep-sage);
+  border-color: var(--primary);
+  color: var(--text-main);
 }
 
 .pill-star {
-  color: var(--terracotta);
+  color: var(--accent);
   margin-right: 4px;
 }
 
@@ -223,11 +223,11 @@
 
 .ai-row .msg-avatar-icon {
   background: var(--primary-subtle);
-  color: var(--deep-sage);
+  color: var(--primary-hover);
 }
 
 .user-row .msg-avatar-icon {
-  background: var(--primary-sage);
+  background: var(--primary);
   color: #FFFFFF;
 }
 
@@ -253,7 +253,7 @@
 }
 
 .user-row .msg-bubble-card {
-  background: var(--primary-sage);
+  background: var(--primary);
   color: #FFFFFF;
   border-top-right-radius: 4px;
 }
@@ -285,7 +285,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--primary-sage);
+  background: var(--primary);
   animation: typingDot 1.4s infinite ease-in-out both;
   opacity: 0.7;
 }
@@ -317,8 +317,8 @@
 }
 
 .chat-input-box:focus-within {
-  border-color: var(--primary-sage);
-  box-shadow: 0 0 0 3px rgba(113, 133, 107, 0.16);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-subtle);
 }
 
 .chat-input-box textarea {
@@ -339,7 +339,7 @@
   width: 36px;
   height: 36px;
   border-radius: var(--radius-xs);
-  background: var(--primary-sage);
+  background: var(--primary);
   color: #FFFFFF;
   display: flex;
   align-items: center;
@@ -350,7 +350,7 @@
 }
 
 .chat-submit-btn:hover:not(:disabled) {
-  background: var(--deep-sage);
+  background: var(--primary-hover);
 }
 
 .chat-submit-btn:disabled {
@@ -427,7 +427,7 @@
 
 .helpline-compact-chip:hover {
   background: var(--primary-subtle);
-  border-color: var(--primary-sage);
+  border-color: var(--primary);
 }
 
 .helpline-chip-name {
@@ -436,6 +436,6 @@
 }
 
 .helpline-chip-num {
-  color: var(--deep-sage);
+  color: var(--primary-hover);
   font-weight: 750;
 }
