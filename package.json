@@ -3,15 +3,23 @@
   "version": "1.0.0",
   "description": "AI-Powered Dynamic Mental Health Monitoring System",
   "dependencies": {
+    "@google/genai": "^2.20.0",
+    "chart.js": "^4.4.0",
+    "concurrently": "^10.0.5",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.20.0",
-    "react-chartjs-2": "^5.2.0",
-    "chart.js": "^4.4.0",
     "sentiment": "^5.0.2"
   },
+  "proxy": "http://localhost:5000",
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"node server.js\" \"react-scripts start\"",
+    "server": "node server.js",
+    "client": "react-scripts start",
     "build": "react-scripts build"
   },
   "devDependencies": {

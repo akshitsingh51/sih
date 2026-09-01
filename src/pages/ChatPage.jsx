@@ -1,29 +1,43 @@
 import React, { useState, useRef, useEffect } from 'react';
+import Header from '../components/Header';
 import { useData } from '../context/DataContext';
-import { analyzeSentiment, extractEmotionSignals } from '../services/sentimentService';
+import { analyzeSentiment } from '../services/sentimentService';
 import { analyzeEmotions } from '../services/emotionService';
+import { sendChatMessage } from '../services/chatService';
 import CrisisPanel from '../components/CrisisPanel';
 import helplines from '../data/helplines';
+import './ChatPage.css';
 
-// Crisis keywords for detection
+// Crisis keywords for instantaneous safety intervention
 const crisisKeywords = [
   'suicide', 'kill myself', 'end my life', 'want to die', 'self harm',
-  'harm myself', 'no reason to live', 'better off dead'
+  'harm myself', 'no reason to live', 'better off dead', 'ending it',
+  'hurt myself', 'hang myself', 'take my life', 'cut myself'
+];
+
+const QUICK_PROMPTS = [
+  "I'm feeling overwhelmed and stressed today.",
+  "Can you guide me through a calming breathing exercise?",
+  "I'm having trouble sleeping because of racing thoughts.",
+  "I feel like I have too much work and don't know where to start."
 ];
 
 function ChatPage() {
   const [messages, setMessages] = useState([
     {
       id: 1,
+      role: 'assistant',
       type: 'bot',
-      text: "Hello. I'm here to provide emotional support. How are you feeling today?",
+      content: "Hello. I'm your supportive AI companion. I'm here to listen, help you reflect, and explore healthy coping strategies. How are you feeling today?",
+      text: "Hello. I'm your supportive AI companion. I'm here to listen, help you reflect, and explore healthy coping strategies. How are you feeling today?",
       timestamp: new Date().toISOString()
     }
   ]);
-  const [input, setIsInput] = useState('');
+  const [input, setInput] = useState('');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [showCrisis, setShowCrisis] = useState(false);
   const [analysisResult, setAnalysisResult] = useState(null);
+
   const messagesEndRef = useRef(null);
   const { addCheckIn } = useData();
 
@@ -33,93 +47,106 @@ function ChatPage() {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages, isAnalyzing]);
 
-  const generateBotResponse = (userText, sentiment, emotions) => {
-    const lowerText = userText.toLowerCase();
-    
-    // Check for crisis
-    if (crisisKeywords.some(kw => lowerText.includes(kw))) {
-      setShowCrisis(true);
-      return "Your message suggests that you may need immediate support. You are not alone, and help is available. Please see the emergency resources that have appeared on your screen.";
-    }
-
-    // Generate response based on sentiment and emotions
-    if (sentiment.label === 'Negative' || sentiment.score < -0.5) {
-      if (emotions.dominantEmotion === 'anxiety' || emotions.dominantEmotion === 'fear') {
-        return "It sounds like you're experiencing anxiety or worry. That's a very human response to difficult situations. Would you like to tell me more about what's causing these feelings?";
-      }
-      if (emotions.dominantEmotion === 'sadness') {
-        return "I hear that you're feeling down. Your feelings are valid, and it's okay to feel this way. Would you like to talk about what's been difficult?";
-      }
-      if (emotions.dominantEmotion === 'hopelessness') {
-        return "I'm concerned about what you've shared. These feelings can be overwhelming, but support is available. Would you like to know about some resources that might help?";
-      }
-      return "Thank you for sharing how you're feeling. It sounds like things are difficult right now. Would you like to tell me more, or would you prefer information about support services?";
-    }
-
-    if (sentiment.label === 'Positive' || sentiment.score > 0.5) {
-      return "I'm glad to hear you're feeling better. It's important to acknowledge these positive moments. Is there anything specific that's helping you feel this way?";
-    }
-
-    // Neutral response
-    if (lowerText.includes('court') || lowerText.includes('trial') || lowerText.includes('legal')) {
-      return "It sounds like legal proceedings are on your mind. It's completely normal to feel anxious about court or trial. Would you like to talk about what feels most difficult about this?";
-    }
-
-    if (lowerText.includes('help') || lowerText.includes('support') || lowerText.includes('resource')) {
-      return "I can help you find support resources. There are several options available including counseling, legal aid, and emergency services. What type of support are you looking for?";
-    }
-
-    return "Thank you for sharing. I'm here to listen and support you. Would you like to continue talking, or would you prefer information about available resources?";
-  };
-
-  const handleSend = async () => {
-    if (!input.trim()) return;
+  const handleSend = async (textToSend) => {
+    const messageContent = (textToSend || input).trim();
+    if (!messageContent || isAnalyzing) return;
 
     const userMessage = {
       id: Date.now(),
+      role: 'user',
       type: 'user',
-      text: input,
+      content: messageContent,
+      text: messageContent,
       timestamp: new Date().toISOString()
     };
 
+    // 1. Append user message immediately & clear input
     setMessages(prev => [...prev, userMessage]);
-    setIsInput('');
+    setInput('');
     setIsAnalyzing(true);
 
-    // Analyze sentiment and emotions
-    const sentiment = analyzeSentiment(input);
-    const emotions = analyzeEmotions(input);
+    const lowerText = messageContent.toLowerCase();
 
-    // Store analysis result
+    // 2. Authoritative Crisis Keyword Check
+    const hasCrisisKeyword = crisisKeywords.some(kw => lowerText.includes(kw));
+    if (hasCrisisKeyword) {
+      setShowCrisis(true);
+      setTimeout(() => {
+        const crisisAlertBotMessage = {
+          id: Date.now() + 1,
+          role: 'assistant',
+          type: 'bot',
+          content: "Your message suggests that you may be in intense distress or experiencing thoughts of harm. You are not alone, and immediate support is available. Please connect with the emergency resources and 24/7 helplines displayed on your screen right now.",
+          text: "Your message suggests that you may be in intense distress or experiencing thoughts of harm. You are not alone, and immediate support is available. Please connect with the emergency resources and 24/7 helplines displayed on your screen right now.",
+          timestamp: new Date().toISOString()
+        };
+        setMessages(prev => [...prev, crisisAlertBotMessage]);
+        setIsAnalyzing(false);
+      }, 400);
+      return;
+    }
+
+    // 3. Sentiment & emotion analysis for insights & context
+    const sentiment = analyzeSentiment(messageContent);
+    const emotions = analyzeEmotions(messageContent);
+
     setAnalysisResult({
       sentiment,
       emotions,
       timestamp: new Date().toISOString()
     });
 
-    // Generate bot response
-    const botResponse = generateBotResponse(input, sentiment, emotions);
+    try {
+      // 4. Build conversation history for memory
+      const conversationHistory = messages.map(msg => ({
+        role: msg.role || (msg.type === 'user' ? 'user' : 'assistant'),
+        content: msg.content || msg.text || ''
+      }));
 
-    setTimeout(() => {
-      const botMessage = {
-        id: Date.now() + 1,
-        type: 'bot',
-        text: botResponse,
-        timestamp: new Date().toISOString()
-      };
-      setMessages(prev => [...prev, botMessage]);
-      setIsAnalyzing(false);
-
-      // Save as check-in data
-      addCheckIn({
-        type: 'chat',
-        text: input,
+      // 5. Send message to backend and await Gemini response
+      const data = await sendChatMessage({
+        message: messageContent,
+        history: conversationHistory,
         sentiment,
         emotions
       });
-    }, 1000);
+
+      // 6. Display Gemini's actual response
+      const assistantMessage = {
+        id: Date.now() + 1,
+        role: 'assistant',
+        type: 'bot',
+        content: data.reply,
+        text: data.reply,
+        timestamp: new Date().toISOString()
+      };
+
+      setMessages(prev => [...prev, assistantMessage]);
+
+      // 7. Save check-in into context
+      addCheckIn({
+        type: 'chat',
+        text: messageContent,
+        sentiment,
+        emotions
+      });
+
+    } catch (err) {
+      console.error('Chat request failed:', err);
+      const errorMessage = {
+        id: Date.now() + 1,
+        role: 'assistant',
+        type: 'bot',
+        content: "Sorry, I'm having trouble connecting right now. Please try again.",
+        text: "Sorry, I'm having trouble connecting right now. Please try again.",
+        timestamp: new Date().toISOString()
+      };
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
+      setIsAnalyzing(false);
+    }
   };
 
   const handleKeyPress = (e) => {
@@ -131,94 +158,137 @@ function ChatPage() {
 
   return (
     <div className="chat-page">
+      <Header />
       <CrisisPanel visible={showCrisis} onClose={() => setShowCrisis(false)} />
-      
-      <div className="chat-container">
-        <div className="chat-header">
-          <h1>AI Support</h1>
-          <p>Supportive conversation and emotional check-in</p>
-          <div className="chat-disclaimer">
-            This AI provides supportive conversation, not therapy or diagnosis.
+
+      <main className="chat-main-wrapper">
+        {/* Main Chat Container */}
+        <section className="chat-container">
+          {/* Header Bar */}
+          <div className="chat-header-bar">
+            <div className="chat-title-group">
+              <div className="chat-avatar-badge">🌿</div>
+              <div>
+                <h2>Supportive AI Companion</h2>
+                <p>Empathetic, confidential listening & coping guidance</p>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div className="messages-container">
-          {messages.map(message => (
-            <div key={message.id} className={`message ${message.type}`}>
-              <div className="message-avatar">
-                {message.type === 'bot' ? '🤖' : '👤'}
-              </div>
-              <div className="message-content">
-                <div className="message-text">{message.text}</div>
-                <div className="message-time">
-                  {new Date(message.timestamp).toLocaleTimeString()}
-                </div>
-              </div>
-            </div>
-          ))}
-          {isAnalyzing && (
-            <div className="message bot">
-              <div className="message-avatar">🤖</div>
-              <div className="message-content">
-                <div className="typing-indicator">
-                  <span></span><span></span><span></span>
-                </div>
-              </div>
-            </div>
-          )}
-          <div ref={messagesEndRef} />
-        </div>
-
-        {analysisResult && (
-          <div className="analysis-sidebar">
-            <h4>Analysis Results</h4>
-            <div className="analysis-item">
-              <span className="analysis-label">Sentiment:</span>
-              <span className={`analysis-value sentiment-${analysisResult.sentiment.label.toLowerCase()}`}>
-                {analysisResult.sentiment.label}
-              </span>
-            </div>
-            <div className="analysis-item">
-              <span className="analysis-label">Dominant Signal:</span>
-              <span className="analysis-value">
-                {analysisResult.emotions.dominantEmotion}
-              </span>
-            </div>
-            <p className="analysis-disclaimer">
-              These are estimates, not clinical assessments.
-            </p>
-          </div>
-        )}
-
-        <div className="chat-input-container">
-          <textarea
-            value={input}
-            onChange={(e) => setIsInput(e.target.value)}
-            onKeyPress={handleKeyPress}
-            placeholder="Type your message..."
-            rows={3}
-            disabled={isAnalyzing}
-          />
-          <button 
-            onClick={handleSend} 
-            className="btn-primary"
-            disabled={isAnalyzing || !input.trim()}
-          >
-            Send
-          </button>
-        </div>
-
-        <div className="chat-help-links">
-          <p>Need immediate help?</p>
-          <div className="help-links">
-            {helplines.slice(0, 3).map(h => (
-              <a key={h.id} href={`tel:${h.tollFree || h.number}`} className="help-link">
-                📞 {h.name}: {h.tollFree || h.number}
-              </a>
+          {/* Quick topic suggestion chips */}
+          <div className="chat-quick-prompts">
+            {QUICK_PROMPTS.map((prompt, idx) => (
+              <button
+                key={idx}
+                className="quick-chip"
+                onClick={() => handleSend(prompt)}
+                disabled={isAnalyzing}
+              >
+                {prompt}
+              </button>
             ))}
           </div>
-        </div>
-      </div>
+
+          {/* Messages Thread */}
+          <div className="messages-container">
+            {messages.map((message) => (
+              <div key={message.id} className={`message-row ${message.type || (message.role === 'user' ? 'user' : 'bot')}`}>
+                <div className="msg-avatar">
+                  {(message.type === 'bot' || message.role === 'assistant') ? '🌿' : '👤'}
+                </div>
+                <div>
+                  <div className="msg-bubble">
+                    {message.content || message.text}
+                  </div>
+                  <div className="msg-meta">
+                    <span>{new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            {isAnalyzing && (
+              <div className="message-row bot">
+                <div className="msg-avatar">🌿</div>
+                <div className="msg-bubble">
+                  <div className="typing-indicator">
+                    <span></span><span></span><span></span>
+                  </div>
+                </div>
+              </div>
+            )}
+            <div ref={messagesEndRef} />
+          </div>
+
+          {/* Input Area */}
+          <div className="chat-input-wrapper">
+            <div className="chat-input-row">
+              <textarea
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyPress}
+                placeholder="Share how you're feeling, or ask for a calming exercise..."
+                rows={2}
+                disabled={isAnalyzing}
+              />
+              <button
+                onClick={() => handleSend()}
+                className="chat-send-btn"
+                disabled={isAnalyzing || !input.trim()}
+              >
+                <span>Send</span>
+                <span>➤</span>
+              </button>
+            </div>
+            <p className="chat-disclaimer-note">
+              This AI companion provides emotional support and stress management, not clinical therapy or medical diagnosis.
+            </p>
+          </div>
+        </section>
+
+        {/* Sidebar with Real-Time Emotion Insights & Emergency Helplines */}
+        <aside className="chat-sidebar-wrapper">
+          <div className="sidebar-card">
+            <h3>📊 Live Emotional Signals</h3>
+            {analysisResult ? (
+              <div className="insight-metric-list">
+                <div className="insight-metric-item">
+                  <span className="insight-label">Sentiment</span>
+                  <span className={`insight-value sentiment-badge-${(analysisResult.sentiment?.label || 'neutral').toLowerCase()}`}>
+                    {analysisResult.sentiment?.label || 'Neutral'}
+                  </span>
+                </div>
+                <div className="insight-metric-item">
+                  <span className="insight-label">Primary Emotion</span>
+                  <span className="insight-value">
+                    {analysisResult.emotions?.dominantEmotion ? analysisResult.emotions.dominantEmotion.toUpperCase() : 'Calm / Neutral'}
+                  </span>
+                </div>
+              </div>
+            ) : (
+              <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
+                Send a message to see real-time emotional signal tracking.
+              </p>
+            )}
+          </div>
+
+          <div className="sidebar-card">
+            <h3>🚨 24/7 Immediate Help</h3>
+            <div className="helpline-quick-list">
+              {helplines.slice(0, 3).map((h) => (
+                <a
+                  key={h.id}
+                  href={`tel:${h.tollFree || h.number}`}
+                  className="helpline-chip"
+                >
+                  <span>{h.name}</span>
+                  <span>📞 {h.tollFree || h.number}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </aside>
+      </main>
     </div>
   );
 }
