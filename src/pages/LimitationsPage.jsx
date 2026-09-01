@@ -30,13 +30,13 @@ function LimitationsPage() {
   ];
 
   return (
-    <div className="limitations-page" style={{ minHeight: '100vh', background: 'var(--bg-app)', display: 'flex', flexDirection: 'column' }}>
+    <div className="limitations-page" style={{ minHeight: '100vh', background: 'var(--sand)', display: 'flex', flexDirection: 'column' }}>
       <Header />
 
       <main className="page-container" style={{ maxWidth: '960px' }}>
         <section className="page-header">
           <div className="page-header-text">
-            <span className="intro-eyebrow">Ethical AI Transparency</span>
+            <span className="intro-eyebrow" style={{ color: 'var(--warm-clay)' }}>Ethical AI Transparency</span>
             <h1>System Scope & Limitations</h1>
             <p>
               Responsible AI requires total transparency about capabilities, boundaries, and ethical safeguards.
@@ -51,21 +51,21 @@ function LimitationsPage() {
                 width: '32px',
                 height: '32px',
                 borderRadius: 'var(--radius-xs)',
-                background: 'var(--accent-subtle)',
-                color: 'var(--accent)',
+                background: 'var(--primary-subtle)',
+                color: 'var(--deep-sage)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 fontSize: '0.8rem',
-                fontWeight: 750,
+                fontWeight: 700,
                 marginBottom: '12px'
               }}>
                 0{index + 1}
               </div>
-              <h3 style={{ fontSize: '1rem', fontWeight: 750, color: 'var(--text-main)', marginBottom: '6px' }}>
+              <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '6px' }}>
                 {limitation.title}
               </h3>
-              <p style={{ fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+              <p style={{ fontSize: '0.86rem', color: 'var(--text-body)', lineHeight: 1.5 }}>
                 {limitation.description}
               </p>
             </div>
@@ -73,10 +73,10 @@ function LimitationsPage() {
         </div>
 
         <section className="wellness-card" style={{ background: 'var(--surface-subtle)', border: '1px solid var(--border)' }}>
-          <h3 style={{ fontSize: '1.05rem', fontWeight: 750, color: 'var(--text-main)', marginBottom: '6px' }}>
+          <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '6px' }}>
             Our Ethical Commitment
           </h3>
-          <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
+          <p style={{ fontSize: '0.9rem', color: 'var(--text-body)', lineHeight: 1.55 }}>
             We continuously audit algorithm fairness, minimize false alarms, and partner with mental health professionals to ensure that users are treated with dignity, compassion, and agency.
           </p>
         </section>

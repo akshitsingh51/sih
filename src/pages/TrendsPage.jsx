@@ -65,14 +65,14 @@ function TrendsPage() {
   };
 
   return (
-    <div className="trends-page" style={{ minHeight: '100vh', background: 'var(--bg-app)', display: 'flex', flexDirection: 'column' }}>
+    <div className="trends-page" style={{ minHeight: '100vh', background: 'var(--sand)', display: 'flex', flexDirection: 'column' }}>
       <Header />
 
       <main className="page-container">
         {/* Page Header */}
         <section className="page-header">
           <div className="page-header-text">
-            <span className="intro-eyebrow">History & Longitudinal Tracking</span>
+            <span className="intro-eyebrow" style={{ color: 'var(--warm-clay)' }}>History & Longitudinal Tracking</span>
             <h1>Wellbeing Trends & Analytics</h1>
             <p>
               Track patterns and understand how your mental wellness evolves over time.
@@ -106,7 +106,7 @@ function TrendsPage() {
             <section className="wellness-card" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', flexWrap: 'wrap' }}>
               <div style={{ flex: 1, minWidth: '260px' }}>
                 <span className="section-eyebrow">Insight Observation</span>
-                <p style={{ fontSize: '0.95rem', color: 'var(--text-main)', fontWeight: 600, marginTop: '4px', lineHeight: 1.5 }}>
+                <p style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 600, marginTop: '4px', lineHeight: 1.5 }}>
                   {trendAnalysis.summary}
                 </p>
               </div>
@@ -179,16 +179,16 @@ function TrendsPage() {
                   <tbody>
                     {checkIns.slice().reverse().map((entry, idx) => (
                       <tr key={entry.id || idx}>
-                        <td style={{ fontWeight: 650, color: 'var(--text-main)' }}>
+                        <td style={{ fontWeight: 600, color: 'var(--text-primary)' }}>
                           {new Date(entry.date).toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' })}
                         </td>
-                        <td style={{ color: 'var(--text-main)', fontWeight: 750 }}>
+                        <td style={{ color: 'var(--text-primary)', fontWeight: 700 }}>
                           {entry.distressScore ?? '—'}/100
                         </td>
                         <td>
                           <RiskBadge level={entry.riskLevel || 'LOW'} size="small" />
                         </td>
-                        <td style={{ color: 'var(--text-secondary)', maxWidth: '340px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        <td style={{ color: 'var(--text-body)', maxWidth: '340px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                           {entry.additionalText || '—'}
                         </td>
                       </tr>

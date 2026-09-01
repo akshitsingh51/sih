@@ -36,7 +36,7 @@ function Header() {
         {/* BRAND */}
         <NavLink to="/dashboard" className="brand">
           <span className="brand-mark" aria-hidden="true">🌿</span>
-          <span>Mental Health Monitor</span>
+          <span>Haven</span>
         </NavLink>
 
         {/* MOBILE TOGGLE BUTTON */}

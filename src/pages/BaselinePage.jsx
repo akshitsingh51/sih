@@ -137,16 +137,16 @@ function BaselinePage() {
   const progress = ((currentQuestion + 1) / questions.length) * 100;
 
   return (
-    <div className="baseline-page" style={{ minHeight: '100vh', background: 'var(--bg-app)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '40px 20px' }}>
+    <div className="baseline-page" style={{ minHeight: '100vh', background: 'var(--sand)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '40px 20px' }}>
       
       <main style={{ width: 'min(760px, 100%)', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '20px' }}>
 
         {/* Header */}
         <section style={{ textAlign: 'center', maxWidth: '640px', margin: '0 auto' }}>
-          <span className="intro-eyebrow" style={{ color: 'var(--accent)' }}>
+          <span className="intro-eyebrow" style={{ color: 'var(--warm-clay)' }}>
             Initial Assessment
           </span>
-          <h1 style={{ fontSize: '1.9rem', fontWeight: 800, color: 'var(--text-main)', marginTop: '4px', marginBottom: '8px' }}>
+          <h1 style={{ fontSize: '1.9rem', fontWeight: 700, color: 'var(--text-primary)', marginTop: '4px', marginBottom: '8px' }}>
             Let's understand how you're feeling
           </h1>
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: 1.55 }}>
@@ -155,13 +155,13 @@ function BaselinePage() {
         </section>
 
         {/* Progress */}
-        <section style={{ background: 'var(--surface-subtle)', borderRadius: 'var(--radius-sm)', padding: '10px 14px', border: '1px solid var(--border-subtle)' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', fontWeight: 650, color: 'var(--text-secondary)', marginBottom: '6px' }}>
+        <section style={{ background: 'var(--white)', borderRadius: 'var(--radius-sm)', padding: '10px 14px', border: '1px solid var(--border)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px' }}>
             <span>Question {currentQuestion + 1} of {questions.length}</span>
             <span>{Math.round(progress)}% Complete</span>
           </div>
-          <div style={{ width: '100%', height: '5px', background: 'var(--border)', borderRadius: '3px', overflow: 'hidden' }}>
-            <div style={{ width: `${progress}%`, height: '100%', background: 'var(--primary)', transition: 'width 0.25s ease' }} />
+          <div style={{ width: '100%', height: '5px', background: 'var(--surface-muted)', borderRadius: '3px', overflow: 'hidden' }}>
+            <div style={{ width: `${progress}%`, height: '100%', background: 'var(--deep-sage)', transition: 'width 0.25s ease' }} />
           </div>
         </section>
 
@@ -172,18 +172,18 @@ function BaselinePage() {
             height: '38px',
             borderRadius: 'var(--radius-sm)',
             background: 'var(--primary-subtle)',
-            color: 'var(--primary-hover)',
+            color: 'var(--deep-sage)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             fontSize: '0.88rem',
-            fontWeight: 750,
+            fontWeight: 700,
             marginBottom: '16px'
           }}>
             0{currentQuestion + 1}
           </div>
 
-          <h2 style={{ fontSize: '1.25rem', fontWeight: 750, color: 'var(--text-main)', marginBottom: '22px', lineHeight: 1.4 }}>
+          <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '22px', lineHeight: 1.4 }}>
             {question.question}
           </h2>
 
@@ -203,8 +203,8 @@ function BaselinePage() {
                     gap: '14px',
                     padding: '12px 16px',
                     borderRadius: 'var(--radius-sm)',
-                    border: selected ? '2px solid var(--primary)' : '1px solid var(--border)',
-                    background: selected ? 'var(--primary-subtle)' : 'var(--surface)',
+                    border: selected ? '2px solid var(--deep-sage)' : '1px solid var(--border)',
+                    background: selected ? 'rgba(138, 154, 134, 0.18)' : 'var(--white)',
                     cursor: 'pointer',
                     textAlign: 'left',
                     transition: 'var(--transition-fast)'
@@ -214,23 +214,24 @@ function BaselinePage() {
                     width: '28px',
                     height: '28px',
                     borderRadius: '6px',
-                    background: selected ? 'var(--primary)' : 'var(--surface-muted)',
+                    background: selected ? 'var(--deep-sage)' : 'var(--surface-subtle)',
                     color: selected ? '#FFFFFF' : 'var(--text-secondary)',
+                    border: selected ? 'none' : '1px solid var(--border)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     fontSize: '0.78rem',
-                    fontWeight: 750,
+                    fontWeight: 700,
                     flexShrink: 0
                   }}>
                     {String.fromCharCode(65 + index)}
                   </span>
 
-                  <span style={{ flex: 1, fontSize: '0.9rem', fontWeight: selected ? 650 : 500, color: 'var(--text-main)' }}>
+                  <span style={{ flex: 1, fontSize: '0.92rem', fontWeight: selected ? 600 : 400, color: 'var(--text-primary)' }}>
                     {option}
                   </span>
 
-                  <span style={{ color: 'var(--primary-hover)', fontWeight: 800, fontSize: '14px' }}>
+                  <span style={{ color: 'var(--deep-sage)', fontWeight: 800, fontSize: '14px' }}>
                     {selected ? '✓' : ''}
                   </span>
                 </button>
@@ -277,7 +278,7 @@ function BaselinePage() {
         <section className="welcome-support" style={{ margin: '0 auto', width: '100%', maxWidth: '760px' }}>
           <div className="support-icon">♡</div>
           <div>
-            <strong style={{ fontSize: '0.86rem', color: 'var(--text-main)' }}>You are in a safe, confidential space.</strong>
+            <strong style={{ fontSize: '0.86rem', color: 'var(--text-primary)' }}>You are in a safe, confidential space.</strong>
             <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
               Your responses are encrypted and used only to calibrate your personal baseline and provide supportive guidance.
             </p>

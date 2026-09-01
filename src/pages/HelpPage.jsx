@@ -39,14 +39,14 @@ function HelpPage() {
   ];
 
   return (
-    <div className="help-page" style={{ minHeight: '100vh', background: 'var(--bg-app)', display: 'flex', flexDirection: 'column' }}>
+    <div className="help-page" style={{ minHeight: '100vh', background: 'var(--sand)', display: 'flex', flexDirection: 'column' }}>
       <Header />
 
       <main className="page-container">
         {/* Header Hero */}
         <section className="page-header">
           <div className="page-header-text">
-            <span className="intro-eyebrow">Support & Crisis Resources</span>
+            <span className="intro-eyebrow" style={{ color: 'var(--warm-clay)' }}>Support & Crisis Resources</span>
             <h1>24/7 Helplines & Care Directory</h1>
             <p>
               Free, confidential mental health resources and 24/7 professional helplines whenever you need assistance.
@@ -65,10 +65,10 @@ function HelpPage() {
           gap: '16px'
         }}>
           <div>
-            <h3 style={{ fontSize: '0.98rem', fontWeight: 750, color: 'var(--danger)', marginBottom: '4px' }}>
+            <h3 style={{ fontSize: '0.98rem', fontWeight: 700, color: 'var(--danger)', marginBottom: '4px' }}>
               Immediate Safety First
             </h3>
-            <p style={{ fontSize: '0.88rem', color: 'var(--text-main)', lineHeight: 1.5 }}>
+            <p style={{ fontSize: '0.88rem', color: 'var(--text-primary)', lineHeight: 1.5 }}>
               If you or someone around you is in immediate danger or experiencing severe thoughts of harm, please dial <strong>112</strong> or call the <strong>Tele-MANAS (14416)</strong> helpline immediately.
             </p>
           </div>
@@ -102,7 +102,7 @@ function HelpPage() {
               >
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px', gap: '8px', flexWrap: 'wrap' }}>
-                    <h4 style={{ fontSize: '1rem', fontWeight: 750, color: 'var(--text-main)' }}>{service.name}</h4>
+                    <h4 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-primary)' }}>{service.name}</h4>
                     <span className="tag tag-steady">
                       {service.availability}
                     </span>
@@ -113,7 +113,7 @@ function HelpPage() {
                 <a
                   href={`tel:${service.number.replace(/-/g, '')}`}
                   className="btn btn-primary"
-                  style={{ width: '100%', height: '40px', fontSize: '0.86rem' }}
+                  style={{ width: '100%', height: '42px', fontSize: '0.88rem' }}
                 >
                   📞 Call {service.number}
                 </a>
@@ -136,8 +136,8 @@ function HelpPage() {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px' }}>
               {recommendations.categories.selfCare && recommendations.categories.selfCare.length > 0 && (
                 <div style={{ background: 'var(--surface-subtle)', padding: '18px 20px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
-                  <h4 style={{ fontSize: '0.92rem', fontWeight: 750, color: 'var(--primary-hover)', marginBottom: '10px' }}>Self-Care Strategies</h4>
-                  <ul style={{ listStyle: 'none', fontSize: '0.84rem', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <h4 style={{ fontSize: '0.92rem', fontWeight: 700, color: 'var(--deep-sage)', marginBottom: '10px' }}>Self-Care Strategies</h4>
+                  <ul style={{ listStyle: 'none', fontSize: '0.86rem', color: 'var(--text-body)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     {recommendations.categories.selfCare.map((c, i) => (
                       <li key={i} style={{ lineHeight: 1.45 }}>• {c}</li>
                     ))}
@@ -147,8 +147,8 @@ function HelpPage() {
 
               {recommendations.categories.counseling && recommendations.categories.counseling.length > 0 && (
                 <div style={{ background: 'var(--surface-subtle)', padding: '18px 20px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
-                  <h4 style={{ fontSize: '0.92rem', fontWeight: 750, color: 'var(--accent)', marginBottom: '10px' }}>Support & Counseling</h4>
-                  <ul style={{ listStyle: 'none', fontSize: '0.84rem', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <h4 style={{ fontSize: '0.92rem', fontWeight: 700, color: 'var(--warm-clay)', marginBottom: '10px' }}>Support & Counseling</h4>
+                  <ul style={{ listStyle: 'none', fontSize: '0.86rem', color: 'var(--text-body)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     {recommendations.categories.counseling.map((c, i) => (
                       <li key={i} style={{ lineHeight: 1.45 }}>• {c}</li>
                     ))}
@@ -158,8 +158,8 @@ function HelpPage() {
 
               {recommendations.specificRecommendations && recommendations.specificRecommendations.length > 0 && (
                 <div style={{ background: 'var(--surface-subtle)', padding: '18px 20px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
-                  <h4 style={{ fontSize: '0.92rem', fontWeight: 750, color: 'var(--primary-hover)', marginBottom: '10px' }}>Targeted Interventions</h4>
-                  <ul style={{ listStyle: 'none', fontSize: '0.84rem', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <h4 style={{ fontSize: '0.92rem', fontWeight: 700, color: 'var(--sage)', marginBottom: '10px' }}>Targeted Interventions</h4>
+                  <ul style={{ listStyle: 'none', fontSize: '0.86rem', color: 'var(--text-body)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     {recommendations.specificRecommendations.map((c, i) => (
                       <li key={i} style={{ lineHeight: 1.45 }}>• {c}</li>
                     ))}

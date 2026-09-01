@@ -1,10 +1,10 @@
 /* =========================================================
-   DASHBOARD PAGE — DARK BLUE-TEAL THEME 🌊
+   DASHBOARD PAGE — WARM SAGE + SAND THEME 🌿
    ========================================================= */
 
 .dashboard-page {
   min-height: 100vh;
-  background: var(--bg-app);
+  background: var(--sand);
   display: flex;
   flex-direction: column;
 }
@@ -45,19 +45,19 @@
 .intro-eyebrow {
   display: inline-block;
   font-size: 0.74rem;
-  font-weight: 750;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--primary-hover);
+  color: var(--warm-clay);
   margin-bottom: 6px;
 }
 
 .dashboard-intro h1 {
   font-size: 2.125rem;
-  font-weight: 800;
-  color: var(--text-main);
+  font-weight: 700;
+  color: var(--text-primary);
   letter-spacing: -0.025em;
-  line-height: 1.15;
+  line-height: 1.18;
 }
 
 .intro-subtext {
@@ -99,7 +99,7 @@
   height: 54px;
   border-radius: 50%;
   background: var(--primary-subtle);
-  color: var(--primary-hover);
+  color: var(--deep-sage);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -108,8 +108,8 @@
 
 .empty-dashboard-card h2 {
   font-size: 1.4rem;
-  font-weight: 750;
-  color: var(--text-main);
+  font-weight: 700;
+  color: var(--text-primary);
 }
 
 .empty-dashboard-card p {
@@ -160,7 +160,7 @@
 
 .section-eyebrow {
   font-size: 0.74rem;
-  font-weight: 750;
+  font-weight: 700;
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -180,8 +180,8 @@
 
 .score-val {
   font-size: 2.75rem;
-  font-weight: 800;
-  color: var(--text-main);
+  font-weight: 700;
+  color: var(--text-primary);
   line-height: 1;
   letter-spacing: -0.03em;
 }
@@ -193,14 +193,14 @@
 }
 
 .score-desc-title {
-  font-size: 0.86rem;
+  font-size: 0.88rem;
   color: var(--text-secondary);
-  font-weight: 650;
+  font-weight: 600;
 }
 
 .status-narrative {
   font-size: 0.92rem;
-  color: var(--text-main);
+  color: var(--text-body);
   line-height: 1.55;
 }
 
@@ -215,8 +215,8 @@
 }
 
 .status-meta-row strong {
-  color: var(--text-secondary);
-  font-weight: 650;
+  color: var(--text-primary);
+  font-weight: 600;
 }
 
 /* Metrics Grid */
@@ -234,7 +234,7 @@
 
 .metric-cell {
   background: var(--surface-subtle);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid rgba(74, 93, 78, 0.10);
   border-radius: var(--radius-sm);
   padding: 16px;
   display: flex;
@@ -244,21 +244,21 @@
 }
 
 .metric-cell:hover {
-  border-color: var(--border);
+  border-color: rgba(74, 93, 78, 0.22);
   background: var(--surface-hover);
 }
 
 .metric-label {
   font-size: 0.8rem;
-  font-weight: 650;
+  font-weight: 600;
   color: var(--text-secondary);
   margin-bottom: 8px;
 }
 
 .metric-value {
   font-size: 1.15rem;
-  font-weight: 750;
-  color: var(--text-main);
+  font-weight: 700;
+  color: var(--text-primary);
   line-height: 1.2;
 }
 
@@ -293,16 +293,16 @@
 .quick-recommendation-box {
   margin-top: 16px;
   padding: 14px 16px;
-  background: var(--accent-subtle);
-  border: 1px solid rgba(214, 154, 114, 0.25);
+  background: rgba(200, 125, 101, 0.10);
+  border: 1px solid rgba(200, 125, 101, 0.24);
   border-radius: var(--radius-sm);
 }
 
 .rec-header-label {
   display: block;
   font-size: 0.72rem;
-  font-weight: 750;
-  color: var(--accent);
+  font-weight: 700;
+  color: var(--warm-clay);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-bottom: 4px;
@@ -310,7 +310,7 @@
 
 .rec-text {
   font-size: 0.88rem;
-  color: var(--text-main);
+  color: var(--text-primary);
   font-weight: 600;
   line-height: 1.45;
   margin-bottom: 8px;
@@ -327,7 +327,7 @@
 }
 
 .nav-shortcut-card {
-  background: var(--surface);
+  background: var(--white);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   padding: 18px 20px;
@@ -340,7 +340,7 @@
 }
 
 .nav-shortcut-card:hover {
-  border-color: var(--primary);
+  border-color: var(--deep-sage);
   box-shadow: var(--shadow-hover);
   transform: translateY(-2px);
 }
@@ -350,7 +350,7 @@
   height: 40px;
   border-radius: var(--radius-sm);
   background: var(--primary-subtle);
-  color: var(--primary-hover);
+  color: var(--deep-sage);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -360,7 +360,7 @@
 
 .support-shortcut .shortcut-icon-circle {
   background: var(--accent-subtle);
-  color: var(--accent);
+  color: var(--warm-clay);
 }
 
 .shortcut-text-block {
@@ -370,7 +370,7 @@
 .shortcut-text-block h4 {
   font-size: 0.95rem;
   font-weight: 700;
-  color: var(--text-main);
+  color: var(--text-primary);
   margin-bottom: 2px;
 }
 
@@ -387,6 +387,6 @@
 }
 
 .nav-shortcut-card:hover .arrow-icon {
-  color: var(--primary-hover);
+  color: var(--deep-sage);
   transform: translateX(4px);
 }
